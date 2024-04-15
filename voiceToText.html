@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Testing Voice to Text</title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.css">
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .house-diagram {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .room-square-container {
+            width: 50%;
+            padding: 1em;
+        }
+        .room-square {
+            background-color: #f0f0f0;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            text-align: center;
+            padding: 100px 0;
+            font-size: 2em;
+        }
+        .lit {
+            background-color: #ffcc00;
+        }
+        @media (max-width: 768px) {
+            .room-square-container {
+                width: 100%;
+            }
+        }
+        #voice-command.listening {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="task-container">
+        <div class="task-header">
+            <h1>Testing Voice to Text</h1>
+            <a href="/" class="btn btn-light">Back</a>
+        </div>
+        <button class="btn btn-primary" id="voice-command">Click button to translate voice to text</button>
+        <div id="transcript-display" style="margin-top: 20px; font-size: 1.5em;"></div>
+    </div>
+    <script>
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const voiceCommand = document.getElementById("voice-command");
+        const recognition = new SpeechRecognition();
+        const speechSynth = window.speechSynthesis;
+
+        recognition.continuous = false;
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            speechSynth.speak(utterance);
+        }
+
+        voiceCommand.onclick = () => {
+            voiceCommand.classList.add("listening");
+            if (speechSynth.speaking) {
+                speechSynth.cancel();
+            }
+            recognition.start();
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById("transcript-display").innerText = `Transcript: "${transcript}"`;
+
+        };
+
+        recognition.onend = () => {
+            voiceCommand.classList.remove("listening");
+        };
+
+        recognition.onerror = (event) => {
+            voiceCommand.classList.remove("listening");
+        };
+    </script>
+</body>
+</html>
