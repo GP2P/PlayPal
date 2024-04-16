@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface with Voice Recognition</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 50px;
+            text-align: center;
+        }
+        .chat-column {
+            border-left: 1px solid #ccc;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+        .message-output {
+            text-align: left;
+        }
+        .message-input {
+            width: auto;
+            margin-top: 20px;
+        }
+        .input-group {
+            width: 50%;
+            margin: auto;
+        }
+        #voice-command.listening {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <h1 id="main-heading" class="display-7">How can I help you?</h1>
+                <div class="message-input">
+                    <div class="input-group">
+                        <input type="text" id="messageInput" class="form-control" placeholder="Type a message..." aria-label="Type a message...">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary" id="voice-command">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
+                                    <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5"/>
+                                    <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 chat-column">
+                <div class="message-output">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const voiceCommand = document.getElementById("voice-command");
+        const recognition = new SpeechRecognition();
+        const messageOutput = document.querySelector('.message-output');
+
+        recognition.continuous = false;
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        voiceCommand.onclick = () => {
+            if (!recognition.ongoing) {
+                recognition.start();
+                voiceCommand.classList.add("listening");
+            }
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            var messageDiv = document.createElement('div');
+            messageDiv.textContent = transcript;
+            messageOutput.appendChild(messageDiv);
+        };
+
+        recognition.onend = () => {
+            voiceCommand.classList.remove("listening");
+            recognition.ongoing = false;
+        };
+
+        recognition.onerror = (event) => {
+            voiceCommand.classList.remove("listening");
+        };
+    </script>
+</body>
+</html>
