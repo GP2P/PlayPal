@@ -1,39 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chat History</title>
-<style>
-    .chat-container {
-        width: 400px;
-        margin: 0 auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat History</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evSX huddled7glulxJEcFDRP++UFWTWtYi4h4/mEoZwYrVP3QP+nzKB+gqbQzW" crossorigin="anonymous">
+  <style>
+    .chat-summary {
+      font-size: 0.8rem;
+      color: #aaa;
     }
-    .message {
-        background-color: #f2f2f2;
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-    }
-    .user-message {
-        background-color: #e2f7fd;
-    }
-    .bot-message {
-        background-color: #eaf2fd;
-    }
-</style>
+  </style>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="message user-message">User: Hello, how are you?</div>
-        <div class="message bot-message">Bot: I'm doing well, thank you!</div>
-        <div class="message user-message">User: Can you help me with something?</div>
-        <div class="message bot-message">Bot: Of course, what do you need help with?</div>
-        <div class="message user-message">User: I'm having trouble with my game.</div>
-        <div class="message bot-message">Bot: Feel free to ask your question, I'll do my best to assist you.</div>
+  <div class="container mt-3">
+    <div class="card">
+      <div class="card-header">
+        <h2>Chat History</h2>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="gameFilter" class="form-label">Filter by Game:</label>
+            <select class="form-select" id="gameFilter">
+              <option value="all">All Games</option>
+              <option value="satisfactory">Satisfactory</option>
+              <option value="minecraft">Minecraft</option>
+              <option value="apex-legends">Apex Legends</option>
+              <option value="league-of-legends">League of Legends</option>
+              <option value="palworld">Palworld</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="aiFilter" class="form-label">Filter by Al:</label>
+            <select class="form-select" id="aiFilter">
+              <option value="all">All AIs</option>
+              <option value="guide">Guide</option>
+              <option value="girlfriend">Girlfriend</option>
+              <option value="friend">Friend</option>
+              <option value="companion">Companion</option>
+              <option value="teammate">Teammate</option>
+              <option value="your-mom">Your Mom</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="chat-item">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="chat-info">
+                <h3>Minecraft Train Network</h3>
+                <p>Create Date: Jan 23</p>
+                <p>Last Chat: Feb 06</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="chat-details">
+                <p>Game: Minecraft</p>
+                <p>Al Persona: Girlfriend</p>
+                <p class="chat-summary">We talked about how you implemented your train network in your satisfactory game so that: You have improved iron transportation bandwidth You missed a block and needs to redo everything!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-OgwmRWzBJ8QqypiizUWDjfjJC8z1PxwMJrdGlnOJ3ONiD4g06iUXOL5zVDL8D7f5" crossorigin="anonymous"></script>
 </body>
 </html>
