@@ -34,30 +34,75 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-9">
-                <h1 id="main-heading" class="display-7">How can I help you?</h1>
-                <div class="message-input">
-                    <div class="input-group">
-                        <input type="text" id="messageInput" class="form-control" placeholder="Type a message..." aria-label="Type a message...">
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-primary" id="voice-command">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
-                                    <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5"/>
-                                    <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+            <!-- Chat Select -->
+            <div class="col-md-3">
+                <div class="nav flex-column nav-pills" id="chat-tabs" role="tablist" aria-orientation="vertical">
+                    <button class="nav-link active" id="valorant-tab" data-bs-toggle="pill" data-bs-target="#valorant-tab-content" type="button" role="tab" aria-controls="valorant-tab-content" aria-selected="true">Valorant: win a match</button>
+                    <button class="nav-link" id="rocket-tab" data-bs-toggle="pill" data-bs-target="#rocket-tab-content" type="button" role="tab" aria-controls="rocket-tab-content" aria-selected="false">Rocket League: score the most goals</button>
+                    <button class="nav-link" id="league-tab" data-bs-toggle="pill" data-bs-target="#league-tab-content" type="button" role="tab" aria-controls="league-tab-content" aria-selected="false">League of Legends: win an ARAM match</button>
+                    <button class="nav-link" id="rainbow-tab" data-bs-toggle="pill" data-bs-target="#rainbow-tab-content" type="button" role="tab" aria-controls="rainbow-tab-content" aria-selected="false">Rainbow Six Siege: rank up</button>
                 </div>
             </div>
-            <div class="col-md-3 chat-column">
-                <div class="message-output">
+            <!-- Chat Content -->
+            <div class="col-md-9">
+                <div class="tab-content" id="chat-content">
+                    <div class="tab-pane fade show active" id="valorant-tab-content" role="tabpanel" aria-labelledby="valorant-tab">
+                        <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                              <img src="https://i.pinimg.com/originals/a5/39/07/a53907b134abfe7fdc26da8eeef1e268.jpg" alt="companion" width="50" class="rounded-circle">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                              <div class="bg-light rounded py-2 mb-2">
+                                <p class="text-small mb-0">Welcome back! I’m here to help you win a match in Valorant. Click the microphone button or press J to chat with me!</p>
+                              </div>
+                            </div>
+                        </div>
+                          
+                      
+                        <div class="message-input">
+                            <div class="input-group">
+                                <input type="text" id="messageInput" class="form-control" placeholder="Type a message..." aria-label="Type a message...">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary" id="voice-command">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
+                                            <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5"/>
+                                            <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="rocket-tab-content" role="tabpanel" aria-labelledby="rocket-tab">
+                        <p>rocket tab</p>
+                    </div>
+                    <div class="tab-pane fade" id="league-tab-content" role="tabpanel" aria-labelledby="league-tab">
+                        <p>league tab</p>
+                    </div>
+                    <div class="tab-pane fade" id="rainbow-tab-content" role="tabpanel" aria-labelledby="rainbow-tab">
+                        <p>rainbow tab</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
     <script>
+        document.querySelectorAll('.nav-link').forEach(function(tab) {
+            tab.addEventListener('click', function(event) {
+                event.preventDefault();
+                document.querySelectorAll('.tab-pane').forEach(function(content) {
+                    content.classList.remove('show', 'active');
+                });
+                document.querySelector(tab.getAttribute('data-bs-target')).classList.add('show', 'active');
+                document.querySelectorAll('.nav-link').forEach(function(link) {
+                    link.classList.remove('active');
+                });
+                tab.classList.add('active');
+            });
+        });
+
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const voiceCommand = document.getElementById("voice-command");
         const recognition = new SpeechRecognition();
