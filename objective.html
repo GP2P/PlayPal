@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Selector Interface</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 50px;
+            text-align: center; 
+        }
+        .chat-column {
+            height: calc(100vh - 100px); 
+            overflow-y: auto; 
+            text-align: left; 
+        }
+        .game-input {
+            width: auto;
+            margin-top: 20px; 
+            position: relative; 
+        }
+        .input-group { 
+            width: 50%; 
+            margin: auto; 
+        }
+        #gameOptions {
+            position: absolute; 
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 1000; 
+            background-color: #fff; 
+            border: 1px solid #ddd; 
+            display: block; 
+        }
+        .option-item {
+            padding: 5px 10px; 
+            cursor: pointer; 
+        }
+        .option-item:hover {
+            background-color: #f8f9fa; 
+        }
+        .recent-games {
+            padding: 10px;
+            border: 1px solid #ddd; 
+            margin-bottom: 20px; 
+        }
+        .next-button {
+            display: block; 
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1.2em; 
+            cursor: pointer; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <h1 id="main-heading" class="display-7">What is your objective?</h1>
+                <div class="game-input">
+                    <div class="input-group">
+                        <input type="text" id="gameInput" class="form-control" placeholder="Type your objective" aria-label="Type a game name...">
+                        <div id="gameOptions">
+                            <div class="option-item" onclick="setGame('Win a match')">Win a match</div>
+                            <div class="option-item" onclick="setGame('Score 3 more points')">Score 3 more points</div>
+                            <div class="option-item" onclick="setGame('Complete a level')">Complete a level</div>
+                            <div class="option-item" onclick="setGame('Collect every gold coin')">Collect every gold coin</div>
+                            <div class="option-item" onclick="setGame('Solve 2 puzzles')">Solve 2 puzzles</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="recent-games">
+                    <h4>Recents</h4>
+                    <div>Win a match</div>
+                    <div>Score 3 more points</div>
+                    <div>Complete a level</div>
+                    <div>Uno</div>
+                </div>
+                <!-- <button class="next-button btn btn-primary" onclick="nextStep()">Next</button> -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function setGame(gameName) {
+            var input = document.getElementById('gameInput');
+            input.value = gameName; 
+        }
+
+        function nextStep() {
+            alert("Going to the next step!");
+        }
+    </script>
+</body>
+</html>
