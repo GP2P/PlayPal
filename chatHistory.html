@@ -1,65 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat History</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    .chat-summary {
-      font-size: 0.8rem;
-      color: #aaa;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat History</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f3f4f6; /* Soft gray background */
+            font-family: 'Poppins', sans-serif; /* Changed font to Poppins */
+        }
+        .chat-info {
+            color: #4a5568;
+        }
+        .chat-summary {
+            color: #6b7280;
+        }
+        select.form-select {
+            appearance: none;
+            background-color: #edf2f7;
+            border: 1px solid #cbd5e0;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        select.form-select:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+        .chat-card {
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            background-color: #fff;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        .chat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
-  <div class="container mx-auto mt-8">
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-      <div class="mb-6">
-        <h2 class="text-2xl font-bold">Chat History</h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label for="gameFilter" class="block text-gray-700 font-bold mb-2">Filter by Game:</label>
-          <select class="form-select" id="gameFilter">
-            <option value="all">All Games</option>
-            <option value="minecraft">Minecraft</option>
-            <option value="apex-legends">Apex Legends</option>
-            <option value="league-of-legends">League of Legends</option>
-            <option value="palworld">Palworld</option>
-          </select>
-        </div>
-        <div>
-          <label for="aiFilter" class="block text-gray-700 font-bold mb-2">Filter by AI:</label>
-          <select class="form-select" id="aiFilter">
-            <option value="all">All AIs</option>
-            <option value="guide">Guide</option>
-            <option value="girlfriend">Girlfriend</option>
-            <option value="friend">Friend</option>
-            <option value="companion">Companion</option>
-            <option value="teammate">Teammate</option>
-            <option value="mom">Your Mom</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-      </div>
-      <div class="mt-8">
-        <div class="bg-gray-200 rounded-lg p-4">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h3 class="text-xl font-bold">Minecraft Train Network</h3>
-              <p class="text-sm text-gray-500">Create Date: Jan 23</p>
-              <p class="text-sm text-gray-500">Last Chat: Feb 06</p>
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Chat History</h1>
+        <div class="card">
+            <div class="card-body">
+                <div class="flex flex-wrap justify-between mb-4">
+                    <div class="w-full md:w-1/2 mb-4 md:mb-0">
+                        <label for="gameFilter" class="block text-sm font-medium text-gray-700">Filter by Game:</label>
+                        <select class="form-select mt-1 w-full border-none" id="gameFilter">
+                            <option value="all">All Games</option>
+                            <option value="minecraft">Minecraft</option>
+                            <option value="apex-legends">Apex Legends</option>
+                            <option value="league-of-legends">League of Legends</option>
+                            <option value="palworld">Palworld</option>
+                        </select>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <label for="aiFilter" class="block text-sm font-medium text-gray-700">Filter by AI:</label>
+                        <select class="form-select mt-1 w-full border-none" id="aiFilter">
+                            <option value="all">All AIs</option>
+                            <option value="guide">Guide</option>
+                            <option value="girlfriend">Girlfriend</option>
+                            <option value="friend">Friend</option>
+                            <option value="companion">Companion</option>
+                            <option value="teammate">Teammate</option>
+                            <option value="mom">Mom</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex flex-wrap -mx-4">
+                    <div class="w-full md:w-1/2 px-4 mb-4">
+                        <a href="#" class="block hover:bg-white rounded-lg transition duration-300 ease-in-out">
+                            <div class="bg-white rounded-lg p-6 chat-card">
+                                <div class="chat-info">
+                                    <h3 class="text-xl font-bold mb-2 text-gray-800">Minecraft Train Network</h3>
+                                    <p class="text-sm text-gray-600">Create Date: Jan 23</p>
+                                    <p class="text-sm text-gray-600">Last Chat: Feb 06</p>
+                                </div>
+                                <div class="chat-summary mt-4">
+                                    <p class="text-sm text-gray-700">We talked about how you implemented your train network in your satisfactory game so that: You have improved iron transportation bandwidth You missed a block and needs to redo everything!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Add more chat history cards here -->
+                </div>
             </div>
-            <div>
-              <p class="text-sm text-gray-500">Game: Minecraft</p>
-              <p class="text-sm text-gray-500">AI Persona: Girlfriend</p>
-              <p class="text-sm chat-summary">We talked about how you implemented your train network in your satisfactory game so that: You have improved iron transportation bandwidth You missed a block and needs to redo everything!</p>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </body>
 </html>
