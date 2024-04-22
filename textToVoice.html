@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Text to Speech Demo</title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.css">
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .house-diagram {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .room-square-container {
+            width: 50%;
+            padding: 1em;
+        }
+        .room-square {
+            background-color: #f0f0f0;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            text-align: center;
+            padding: 100px 0;
+            font-size: 2em;
+        }
+        .lit {
+            background-color: #ffcc00;
+        }
+        @media (max-width: 768px) {
+            .room-square-container {
+                width: 100%;
+            }
+        }
+        #voice-command.listening {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="task-container">
+        <div class="task-header">
+            <h1>Text to Speech</h1>
+            <a href="/" class="btn btn-light">Back</a>
+        </div>
+        <textarea id="text-input" class="form-control" rows="4" placeholder="Enter text here..."></textarea>
+        <button class="btn btn-primary mt-3" id="speak-button">Speak Text</button>
+        <div id="transcript-display" style="margin-top: 20px; font-size: 1.5em;"></div>
+    </div>
+    <script>
+        const speechSynth = window.speechSynthesis;
+        const speakButton = document.getElementById("speak-button");
+        const textInput = document.getElementById("text-input");
+
+        function speak(text) {
+            if (speechSynth.speaking) {
+                speechSynth.cancel();
+            }
+            const utterance = new SpeechSynthesisUtterance(text);
+            speechSynth.speak(utterance);
+        }
+
+        speakButton.onclick = () => {
+            const text = textInput.value;
+            speak(text);
+        };
+    </script>
+</body>
+</html>
