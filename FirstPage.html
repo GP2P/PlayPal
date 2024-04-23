@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Interface</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .input-area {
+            margin-top: 20px; 
+            position: relative; 
+        }
+        .option-item {
+            padding: 5px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .option-item img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+        .option-item:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="input-area">
+            
+            <h1 class="text-3xl font-bold text-center mb-8">What game are you playing today?</h1>
+            <input type="text" id="gameInput" class="form-control" placeholder="Type a game name...">
+            <button onclick="toggleDropdown('gameDropdown')" class="dropdown-button">
+                <span>Game Suggestions</span>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+            <ul id="gameDropdown" class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" style="display: none;">
+                <li class="option-item" onclick="setGame('Valorant')">
+                    <img src="https://media.npr.org/assets/img/2020/05/07/valorant_jett_wide-a62d0cdd87d0edffbabda5a6efe7bb62e57554a5.jpg" alt="">
+                    Valorant
+                </li>
+                <li class="option-item" onclick="setGame('League of Legends')">
+                    <img src="https://i0.wp.com/highschool.latimes.com/wp-content/uploads/2021/09/league-of-legends.jpeg?fit=1607%2C895&ssl=1" alt="">
+                    League of Legends
+                </li>
+                <li class="option-item" onclick="setGame('Fortnite')">
+                    <img src="https://cdn1.epicgames.com/offer/fn/Blade_2560x1440_2560x1440-95718a8046a942675a0bc4d27560e2bb?h=270&quality=medium&resize=1&w=480" alt="">
+                    Fortnite
+                </li>
+                <li class="option-item" onclick="setGame('Call of Duty')">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTptBCPEM7XTx-pTgaojDsRrE2qeIRDY-avGJA5LXE8Pg&s" alt="">
+                    Call of Duty
+                </li>
+                <li class="option-item" onclick="setGame('Minecraft')">
+                    <img src="https://www.minecraft.net/etc.clientlibs/minecraft/clientlibs/main/resources/img/minecraft-creeper-face.jpg" alt="">
+                    Minecraft
+                </li>
+            </ul>
+        </div>
+
+        <div class="input-area">
+            <h1 class="text-3xl font-bold text-center mb-8">What is your objective?</h1>
+            <input type="text" id="objInput" class="form-control" placeholder="Type your objective...">
+            <!-- <button onclick="toggleDropdown('objectiveDropdown')" class="button w-full">
+                <span class="flex items-center">
+                    <span class="ml-3 block truncate">Objective Suggestions</span>
+                </span>
+            </button> -->
+            <button onclick="toggleDropdown('objectiveDropdown')" class="dropdown-button">
+                <span>Objective Suggestions</span>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+
+            <ul id="objectiveDropdown" class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" style="display: none;">
+                <li class="option-item" onclick="setObjective('Win a match')">
+                    <!-- <img src="https://dummyimage.com/32x32/ff00ff/fff&text=W" alt=""> -->
+                    Win a match
+                </li>
+                <li class="option-item" onclick="setObjective('Score 3 more points')">
+                    <!-- <img src="https://dummyimage.com/32x32/ffa500/fff&text=S" alt=""> -->
+                    Score 3 more points
+                </li>
+                <li class="option-item" onclick="setObjective('Complete a level')">
+                    <!-- <img src="https://dummyimage.com/32x32/f0f8ff/000&text=C" alt=""> -->
+                    Complete a level
+                </li>
+                <li class="option-item" onclick="setObjective('Collect every gold coin')">
+                    <!-- <img src="https://dummyimage.com/32x32/4682b4/fff&text=C" alt=""> -->
+                    Collect every gold coin
+                </li>
+                <li class="option-item" onclick="setObjective('Solve 2 puzzles')">
+                    <!-- <img src="https://dummyimage.com/32x32/daa520/fff&text=S" alt=""> -->
+                    Solve 2 puzzles
+                </li>
+            </ul>
+        </div>
+    </div>
+    <button class="btn btn-outline btn-success" onclick="nextStep()">Next</button>
+
+
+    <script>
+        function setGame(gameName) {
+            document.getElementById('gameInput').value = gameName;
+            toggleDropdown('gameDropdown'); // Close the game dropdown
+        }
+
+        function setObjective(objectiveName) {
+            document.getElementById('objInput').value = objectiveName;
+            toggleDropdown('objectiveDropdown'); // Close the objective dropdown
+        }
+
+        function toggleDropdown(dropdownId) {
+            var dropdown = document.getElementById(dropdownId);
+            dropdown.style.display = (dropdown.style.display === 'none' ? 'block' : 'none');
+        }
+        function nextStep() {
+            window.location.href = 'voiceRecognition.html';
+        }
+    </script>
+</body>
+</html>
