@@ -76,16 +76,18 @@
 		</div>
 		<!-- Summary panel end -->
 
+		<!-- Collapse Button start -->
+		<button
+			id="collapse-button"
+			class="text-gray-600 bg-transparent hover:bg-primary hover:text-white p-2"
+		>
+			&lt;
+		</button>
+		<!-- Collapse Button end -->
+
 		<!-- Chat panel start -->
-		<div id="chat-panel" class="w-2/3 transition-all duration-300 ease-in-out flex relative justify-start">
-			<!-- Collapse Button start -->
-            <button
-                id="collapse-button"
-                class="text-gray-600 bg-transparent hover:bg-primary hover:text-white p-2"
-            >
-                &lt;
-            </button>
-			<!-- Collapse Button end -->
+		<div id="chat-panel" class="w-2/3 transition-all duration-300 ease-in-out flex flex-col relative justify-start">
+			
 
 			<!-- Chat Content start -->
 			<div class="flex-1 p-4">
@@ -110,19 +112,21 @@
 					<div class="chat-bubble">user message</div>
 				</div>
 				<!-- User Message end -->
-				<!-- Chat Button -->
-				<!-- Microphone -->
-                <div class="d-flex  align-items-end mb-5">
-                    <button type="button" class="btn btn-primary" id="voice-command">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
-                            <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5"/>
-                            <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3"/>
-                        </svg>
-                    </button>
-                </div>
+				
 				  
 			</div>
 			<!-- Chat Content end -->
+
+			<!-- Chat Button -->
+			<!-- Microphone -->
+			<div class="flex justify-center mb-4">
+				<button type="button" class="btn btn-primary" id="voice-command">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
+						<path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5"/>
+						<path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3"/>
+					</svg>
+				</button>
+			</div>
 		</div>
 		<!-- Chat panel end -->
 
@@ -185,81 +189,81 @@
         observer.observe(targetNode, config);
     });
         
-        document.querySelectorAll('.nav-link').forEach(function(tab) {
-            tab.addEventListener('click', function(event) {
-                event.preventDefault();
-                document.querySelectorAll('.tab-pane').forEach(function(content) {
-                    content.classList.remove('show', 'active');
-                });
-                document.querySelector(tab.getAttribute('data-bs-target')).classList.add('show', 'active');
-                document.querySelectorAll('.nav-link').forEach(function(link) {
-                    link.classList.remove('active');
-                });
-                tab.classList.add('active');
-            });
-        });
+	document.querySelectorAll('.nav-link').forEach(function(tab) {
+		tab.addEventListener('click', function(event) {
+			event.preventDefault();
+			document.querySelectorAll('.tab-pane').forEach(function(content) {
+				content.classList.remove('show', 'active');
+			});
+			document.querySelector(tab.getAttribute('data-bs-target')).classList.add('show', 'active');
+			document.querySelectorAll('.nav-link').forEach(function(link) {
+				link.classList.remove('active');
+			});
+			tab.classList.add('active');
+		});
+	});
 
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const voiceCommand = document.getElementById("voice-command");
-        const recognition = new SpeechRecognition();
+	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+	const voiceCommand = document.getElementById("voice-command");
+	const recognition = new SpeechRecognition();
 
-        recognition.continuous = false;
-        recognition.lang = "en-US";
-        recognition.interimResults = false;
-        recognition.maxAlternatives = 1;
+	recognition.continuous = false;
+	recognition.lang = "en-US";
+	recognition.interimResults = false;
+	recognition.maxAlternatives = 1;
 
-        voiceCommand.onclick = () => {
-            if (!recognition.ongoing) {
-                recognition.start();
-                voiceCommand.classList.add("listening");
-            }
-        };
+	voiceCommand.onclick = () => {
+		if (!recognition.ongoing) {
+			recognition.start();
+			voiceCommand.classList.add("listening");
+		}
+	};
 
-        recognition.onresult = (event) => {
-            const transcript = event.results[0][0].transcript;
-            const activeTab = document.querySelector('.tab-pane.show.active');
-            const activeMessageContainer = activeTab.querySelector('.message-container');
-            
-            // Add user message
-            var userMessageDiv = document.createElement('div');
-            userMessageDiv.classList.add('d-flex', 'flex-row-reverse', 'mb-3');
-            userMessageDiv.innerHTML = `
-                <div class="flex-shrink-0">
-                    <img src="https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" alt="user" width="50" class="rounded-circle">
-                </div>
-                <div class="me-3">
-                    <div class="bg-light rounded py-2 mb-2">
-                        <p class="text-small mb-0 px-3">${transcript}</p>
-                    </div>
-                </div>
-            `;
-            activeMessageContainer.appendChild(userMessageDiv);
+	recognition.onresult = (event) => {
+		const transcript = event.results[0][0].transcript;
+		const activeTab = document.querySelector('.tab-pane.show.active');
+		const activeMessageContainer = activeTab.querySelector('.message-container');
+		
+		// Add user message
+		var userMessageDiv = document.createElement('div');
+		userMessageDiv.classList.add('d-flex', 'flex-row-reverse', 'mb-3');
+		userMessageDiv.innerHTML = `
+			<div class="flex-shrink-0">
+				<img src="https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" alt="user" width="50" class="rounded-circle">
+			</div>
+			<div class="me-3">
+				<div class="bg-light rounded py-2 mb-2">
+					<p class="text-small mb-0 px-3">${transcript}</p>
+				</div>
+			</div>
+		`;
+		activeMessageContainer.appendChild(userMessageDiv);
 
-            // Add companion message
-            var companionMessageDiv = document.createElement('div');
-            companionMessageDiv.classList.add('d-flex', 'mb-3');
-            companionMessageDiv.innerHTML = `
-                <div class="flex-shrink-0">
-                    <img src="https://i.pinimg.com/originals/a5/39/07/a53907b134abfe7fdc26da8eeef1e268.jpg" alt="companion" width="50" class="rounded-circle">
-                </div>
-                <div class="ms-3">
-                    <div class="bg-light rounded py-2 mb-2">
-                        <p class="text-small response mb-0 px-3">sup</p>
-                    </div>
-                </div>
-            `;
-            activeMessageContainer.appendChild(companionMessageDiv);
-        };
+		// Add companion message
+		var companionMessageDiv = document.createElement('div');
+		companionMessageDiv.classList.add('d-flex', 'mb-3');
+		companionMessageDiv.innerHTML = `
+			<div class="flex-shrink-0">
+				<img src="https://i.pinimg.com/originals/a5/39/07/a53907b134abfe7fdc26da8eeef1e268.jpg" alt="companion" width="50" class="rounded-circle">
+			</div>
+			<div class="ms-3">
+				<div class="bg-light rounded py-2 mb-2">
+					<p class="text-small response mb-0 px-3">sup</p>
+				</div>
+			</div>
+		`;
+		activeMessageContainer.appendChild(companionMessageDiv);
+	};
 
-        recognition.onend = () => {
-            voiceCommand.classList.remove("listening");
-            recognition.ongoing = false;
-        };
+	recognition.onend = () => {
+		voiceCommand.classList.remove("listening");
+		recognition.ongoing = false;
+	};
 
-        recognition.onerror = (event) => {
-            voiceCommand.classList.remove("listening");
-            console.error('Speech recognition error:', event.error);
-        };
+	recognition.onerror = (event) => {
+		voiceCommand.classList.remove("listening");
+		console.error('Speech recognition error:', event.error);
+	};
 
 
 </script>
