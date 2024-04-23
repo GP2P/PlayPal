@@ -40,13 +40,14 @@
 </div>
 <!--Navbar end-->
 <button class="btn">
-	<a href="chat.html">Go to Chat 1</a>
+	<!--set local storage "currentConversationID" to "conv_1", then redirect to chat.html-->
+	<a href="chat.html" onclick="localStorage.setItem('currentConversationID', 'conv_1')">Go to Chat 1</a>
 </button>
 <button class="btn">
-	<a href="chat.html">Go to Chat 2</a>
+	<a href="chat.html" onclick="localStorage.setItem('currentConversationID', 'conv_2')">Go to Chat 2</a>
 </button>
 <button class="btn">
-	<a href="chat.html">Go to Chat 3</a>
+	<a href="chat.html" onclick="localStorage.setItem('currentConversationID', 'conv_3')">Go to Chat 3</a>
 </button>
 </body>
 </html>
