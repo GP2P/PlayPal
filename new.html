@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>newww</title>
+    <title>new</title>
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <meta charset="UTF-8">
@@ -181,6 +181,29 @@
             dropdown.style.display = (dropdown.style.display === 'none' ? 'block' : 'none');
         }
         function nextStep() {
+            window.location.href = 'voiceRecognition.html';
+        }
+        function storeData() {
+            const data = {
+                "chat_list": [
+                    {
+                        "ID": "conv_11",
+                        "Game_Name": document.getElementById('gameInput').value,
+                        "AI_Persona": {
+                            "name": document.getElementById('selectedPersona').textContent.replace('Selected Persona: ', ''),
+                            "description": "you are the user's imaginary " + document.getElementById('selectedPersona').textContent.replace('Selected Persona: ', '').toLowerCase()
+                        },
+                        "Goal": document.getElementById('objInput').value,
+                        "Summary": "Blah blah blah"
+                    }
+                ]
+            };
+            const jsonData = JSON.stringify(data);
+            localStorage.setItem('chatData', jsonData);
+        }
+    
+        function nextStep() {
+            storeData(); 
             window.location.href = 'voiceRecognition.html';
         }
     </script>
