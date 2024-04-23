@@ -8,43 +8,138 @@
 	<title>PlayPal - Chat</title>
 </head>
 <body>
-<!--Navbar start-->
-<div class="navbar bg-base-100">
-	<div class="navbar-start">
-		<a class="btn btn-ghost text-xl" href="history.html">PlayPal</a>
-		<!--Menu Button start-->
-		<a class="btn btn-ghost text-xl" href="history.html">
-			<div class="" role="button" tabindex="0">
-				<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-				     xmlns="http://www.w3.org/2000/svg">
-					<path d="M4 6h16M4 12h8m-8 6h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-				</svg>
+	<!--Navbar start-->
+	<div class="navbar bg-base-100">
+		<div class="navbar-start">
+			<a class="btn btn-ghost text-xl" href="history.html">PlayPal</a>
+			<!--Menu Button start-->
+			<a class="btn btn-ghost text-xl" href="history.html">
+				<div class="" role="button" tabindex="0">
+					<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg">
+						<path d="M4 6h16M4 12h8m-8 6h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+					</svg>
+				</div>
+			</a>
+			<!--Menu Button end-->
+		</div>
+		<div class="navbar-center flex">
+			<ul class="menu menu-horizontal px-1">
+				<li>
+					<!--Chat Name start-->
+					<details>
+						<summary>Chat name is here</summary>
+						<!--todo: change name based on chat-->
+						<ul class="p-2">
+							<li><a>Rename Chat</a></li>
+							<!--todo: implement-->
+							<li><a class="text-error">Delete Chat</a></li>
+							<!--todo: implement (local storage remove)-->
+						</ul>
+					</details>
+					<!--Chat Name end-->
+				</li>
+			</ul>
+		</div>
+		<div class="navbar-end">
+			<a class="btn" href="new.html">New Chat</a>
+		</div>
+	</div>
+	<!--Navbar end-->
+
+	<!-- Main container start -->
+	<div class="flex w-full">
+		<!-- Summary panel start -->
+		<div id="summary-panel" class="w-1/3 bg-neutral transition-all duration-300 ease-in-out flex flex-col overflow-hidden relative">
+			<div class="flex-1 p-4 bg-neutral" id="summary-content">
+				<p>
+					Created February 29, 2024<br>
+					Last Chat: March 10, 2024<br>
+					<br>
+					Key takeaways:<br>
+					- Crosshair Placement: Always keep the crosshair at head level and anticipate enemy positions to minimize reaction time when engaging.<br>
+					- Map Awareness: Learn common map callouts and develop a habit of checking minimap regularly to anticipate enemy rotations and plan strategic movements.<br>
+					- Utility Usage: Understand the utility of your chosen agent and utilize it effectively to control space, gather information, and support teammates.<br>
+					- Communication: Communicate clearly with teammates about enemy positions, intentions, and strategies. Effective communication enhances teamwork and coordination.<br>
+				</p>
 			</div>
-		</a>
-		<!--Menu Button end-->
+		</div>
+		<!-- Summary panel end -->
+
+		<!-- Chat panel start -->
+		<div id="chat-panel" class="w-2/3 transition-all duration-300 ease-in-out flex relative items-center justify-start">
+			<!-- Collapse Button start -->
+            <button
+                id="collapse-button"
+                class="text-gray-600 bg-transparent hover:bg-blue-500 hover:text-white p-2"
+            >
+                &lt;
+            </button>
+			<!-- Collapse Button end -->
+
+			<!-- Chat Content start -->
+			<div class="flex-1 p-4">
+				<!-- Companion Message start -->
+				<div class="chat chat-start">
+					<div class="chat-image avatar">
+						<div class="w-10 rounded-full">
+							<img alt="companion" src="https://i.pinimg.com/originals/a5/39/07/a53907b134abfe7fdc26da8eeef1e268.jpg" />
+						</div>
+					</div>
+					<div class="chat-bubble">Welcome back! I’m here to help you win a match in Valorant. Click the microphone button to chat with me!.</div>
+				</div>
+				<!-- Companion Message end -->
+
+				<!-- User Message start -->
+				<div class="chat chat-end">
+					<div class="chat-image avatar">
+						<div class="w-10 rounded-full">
+							<img alt="Tailwind CSS chat bubble component" src="https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" />
+						</div>
+					</div>
+					<div class="chat-bubble">user message</div>
+				</div>
+				<!-- User Message end -->
+				  
+			</div>
+			<!-- Chat Content end -->
+		</div>
+		<!-- Chat panel end -->
+
+		
 	</div>
-	<div class="navbar-center flex">
-		<ul class="menu menu-horizontal px-1">
-			<li>
-				<!--Chat Name start-->
-				<details>
-					<summary>Chat name is here</summary>
-					<!--todo: change name based on chat-->
-					<ul class="p-2">
-						<li><a>Rename Chat</a></li>
-						<!--todo: implement-->
-						<li><a class="text-error">Delete Chat</a></li>
-						<!--todo: implement (local storage remove)-->
-					</ul>
-				</details>
-				<!--Chat Name end-->
-			</li>
-		</ul>
-	</div>
-	<div class="navbar-end">
-		<a class="btn" href="new.html">New Chat</a>
-	</div>
-</div>
-<!--Navbar end-->
+	<!-- Main container end -->
 </body>
+
+<script>
+	const collapseButton = document.getElementById('collapse-button');
+	const summaryPanel = document.getElementById('summary-panel');
+	const summaryContent = document.getElementById('summary-content');
+	const chatPanel = document.getElementById('chat-panel');
+
+	let isCollapsed = false;
+
+	collapseButton.addEventListener('click', () => {
+		if (isCollapsed) {
+			// Expand the summary panel
+			summaryPanel.classList.remove('w-0');
+			summaryPanel.classList.add('w-1/3');
+			summaryContent.classList.remove('hidden');
+			chatPanel.classList.remove('w-full');
+			chatPanel.classList.add('w-2/3');
+			collapseButton.textContent = '<'; 
+		} else {
+			// Collapse the summary panel
+			summaryPanel.classList.remove('w-1/3');
+			summaryPanel.classList.add('w-0');
+			summaryContent.classList.add('hidden');
+			chatPanel.classList.remove('w-2/3');
+			chatPanel.classList.add('w-full');
+			collapseButton.textContent = '>';
+		}
+		isCollapsed = !isCollapsed;
+	});
+
+
+</script>
 </html>
