@@ -1,40 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>newww</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
 	<link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.2/dist/full.min.css" rel="stylesheet" type="text/css"/>
 	<script src="https://cdn.tailwindcss.com"></script>
 	<script defer src="src/auto_theme.js"></script>
 	<script defer src="src/populate_data.js"></script>
-	<title>PlayPal - New Chat</title>
+    <style>
+        body {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .input-area {
+            margin-top: 20px; 
+            position: relative; 
+        }
+        .option-item {
+            padding: 5px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .option-item img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+        .option-item:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
 </head>
 <body>
-<!--Navbar start-->
+    <!--Navbar start-->
 <div class="navbar bg-base-100">
 	<div class="navbar-start">
 		<a class="btn btn-ghost text-xl" href="history.html">PlayPal</a>
-		<!--Menu Button start-->
-		<a class="btn btn-ghost text-xl" href="history.html">
-			<div class="" role="button" tabindex="0">
-				<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-				     xmlns="http://www.w3.org/2000/svg">
-					<path d="M4 6h16M4 12h8m-8 6h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-				</svg>
-			</div>
-		</a>
-		<!--Menu Button end-->
 	</div>
 	<div class="navbar-center flex">
 		<ul class="menu menu-horizontal px-1">
 			<li>
-				<summary>Create New Chat</summary>
+				<!--Theme Toggle start-->
+				<label class="flex cursor-pointer gap-2">
+					<svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+					     stroke-width="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+						<circle cx="12" cy="12" r="5"/>
+						<path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>
+					</svg>
+					<input class="toggle theme-controller" type="checkbox"/>
+					<svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+					     stroke-width="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+						<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+					</svg>
+				</label>
+				<!--Theme Toggle end-->
 			</li>
 		</ul>
 	</div>
 	<div class="navbar-end">
-		<a class="btn" href="new.html">New Chat</a>
+		<!-- <a class="btn" href="new.html">New Chat</a> -->
 	</div>
 </div>
 <!--Navbar end-->
+    <div>
+        <div class="input-area">
+            
+            <h1 class="text-3xl font-bold text-center mb-8">What game are you playing today?</h1>
+            <input type="text" id="gameInput" placeholder="Type a game name..." class="input input-bordered">
+            <button onclick="toggleDropdown('gameDropdown')" class="dropdown-button">
+                <span>Game Suggestions</span>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+            <ul id="gameDropdown" class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" style="display: none;">
+                <li class="option-item" onclick="setGame('Valorant')">
+                    <img src="https://media.npr.org/assets/img/2020/05/07/valorant_jett_wide-a62d0cdd87d0edffbabda5a6efe7bb62e57554a5.jpg" alt="">
+                    Valorant
+                </li>
+                <li class="option-item" onclick="setGame('League of Legends')">
+                    <img src="https://i0.wp.com/highschool.latimes.com/wp-content/uploads/2021/09/league-of-legends.jpeg?fit=1607%2C895&ssl=1" alt="">
+                    League of Legends
+                </li>
+                <li class="option-item" onclick="setGame('Fortnite')">
+                    <img src="https://cdn1.epicgames.com/offer/fn/Blade_2560x1440_2560x1440-95718a8046a942675a0bc4d27560e2bb?h=270&quality=medium&resize=1&w=480" alt="">
+                    Fortnite
+                </li>
+                <li class="option-item" onclick="setGame('Call of Duty')">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTptBCPEM7XTx-pTgaojDsRrE2qeIRDY-avGJA5LXE8Pg&s" alt="">
+                    Call of Duty
+                </li>
+                <li class="option-item" onclick="setGame('Minecraft')">
+                    <img src="https://www.minecraft.net/etc.clientlibs/minecraft/clientlibs/main/resources/img/minecraft-creeper-face.jpg" alt="">
+                    Minecraft
+                </li>
+            </ul>
+        </div>
+
+        <div class="input-area">
+            <h1 class="text-3xl font-bold text-center mb-8">What is your objective?</h1>
+            <input type="text" id="objInput" placeholder="Type your objective..." class="input input-bordered">
+
+            <!-- <input type="text" id="objInput" class="form-control" placeholder="Type your objective..."> -->
+            <!-- <button onclick="toggleDropdown('objectiveDropdown')" class="button w-full">
+                <span class="flex items-center">
+                    <span class="ml-3 block truncate">Objective Suggestions</span>
+                </span>
+            </button> -->
+            <button onclick="toggleDropdown('objectiveDropdown')" class="dropdown-button">
+                <span>Objective Suggestions</span>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+
+            <ul id="objectiveDropdown" class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" style="display: none;">
+                <li class="option-item" onclick="setObjective('Win a match')">
+                    <!-- <img src="https://dummyimage.com/32x32/ff00ff/fff&text=W" alt=""> -->
+                    Win a match
+                </li>
+                <li class="option-item" onclick="setObjective('Score 3 more points')">
+                    <!-- <img src="https://dummyimage.com/32x32/ffa500/fff&text=S" alt=""> -->
+                    Score 3 more points
+                </li>
+                <li class="option-item" onclick="setObjective('Complete a level')">
+                    <!-- <img src="https://dummyimage.com/32x32/f0f8ff/000&text=C" alt=""> -->
+                    Complete a level
+                </li>
+                <li class="option-item" onclick="setObjective('Collect every gold coin')">
+                    <!-- <img src="https://dummyimage.com/32x32/4682b4/fff&text=C" alt=""> -->
+                    Collect every gold coin
+                </li>
+                <li class="option-item" onclick="setObjective('Solve 2 puzzles')">
+                    <!-- <img src="https://dummyimage.com/32x32/daa520/fff&text=S" alt=""> -->
+                    Solve 2 puzzles
+                </li>
+            </ul>
+        </div>
+        <div class="input-area">
+            <h1 class="text-3xl font-bold text-center mb-8">Choose your AI Persona</h1>
+            <button onclick="toggleDropdown('AIDropdown')" class="dropdown-button">
+                <span>Persona Suggestions</span>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+            <ul id="AIDropdown" class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" style="display: none;">
+                <li class="option-item" onclick="setPersona('AI Coach')">AI Coach</li>
+                <li class="option-item" onclick="setPersona('AI Buddy')">AI Buddy</li>
+                <li class="option-item" onclick="setPersona('AI Boyfriend')">AI Boyfriend</li>
+                <li class="option-item" onclick="setPersona('AI Girlfriend')">AI Girlfriend</li>
+                <li class="option-item" onclick="setPersona('AI Friend')">AI Friend</li>
+            </ul>
+            <div id="selectedPersona">Selected Persona: None</div>
+        </div>
+    </div>
+    </div>
+    <br>
+    <button class="btn btn-outline btn-success" onclick="nextStep()">Next</button>
+
+
+    <script>
+        function setGame(gameName) {
+            document.getElementById('gameInput').value = gameName;
+            toggleDropdown('gameDropdown');
+        }
+
+        function setObjective(objectiveName) {
+            document.getElementById('objInput').value = objectiveName;
+            toggleDropdown('objectiveDropdown'); // Close the objective dropdown
+        }
+        function setPersona(personaName) {
+            document.getElementById('selectedPersona').textContent = personaName;
+            toggleDropdown('AIDropdown'); // Close the AI persona dropdown
+        }
+
+        function toggleDropdown(dropdownId) {
+            var dropdown = document.getElementById(dropdownId);
+            dropdown.style.display = (dropdown.style.display === 'none' ? 'block' : 'none');
+        }
+        function nextStep() {
+            window.location.href = 'voiceRecognition.html';
+        }
+    </script>
 </body>
 </html>
