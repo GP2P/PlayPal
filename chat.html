@@ -11,6 +11,9 @@
         #voice-command.listening {
             background-color: #f44336;
         }
+		.navbar {
+			z-index: 9999;
+		}
 	</style>
 	<script src="https://cdn.tailwindcss.com"></script>
 	<script defer src="src/auto_theme.js"></script>
@@ -90,7 +93,7 @@
 			
 
 			<!-- Chat Content start -->
-			<div class="flex-1 p-4">
+			<div id="chat-content" class="flex-1 p-4">
 				<!-- Companion Message start -->
 				<div class="chat chat-start">
 					<div class="chat-image avatar">
@@ -101,18 +104,6 @@
 					<div class="chat-bubble">Welcome back! I’m here to help you win a match in Valorant. Click the microphone button to chat with me!.</div>
 				</div>
 				<!-- Companion Message end -->
-
-				<!-- User Message start -->
-				<div class="chat chat-end">
-					<div class="chat-image avatar">
-						<div class="w-10 rounded-full">
-							<img alt="Tailwind CSS chat bubble component" src="https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" />
-						</div>
-					</div>
-					<div class="chat-bubble">user message</div>
-				</div>
-				<!-- User Message end -->
-				
 				  
 			</div>
 			<!-- Chat Content end -->
@@ -188,20 +179,6 @@
 
         observer.observe(targetNode, config);
     });
-        
-	document.querySelectorAll('.nav-link').forEach(function(tab) {
-		tab.addEventListener('click', function(event) {
-			event.preventDefault();
-			document.querySelectorAll('.tab-pane').forEach(function(content) {
-				content.classList.remove('show', 'active');
-			});
-			document.querySelector(tab.getAttribute('data-bs-target')).classList.add('show', 'active');
-			document.querySelectorAll('.nav-link').forEach(function(link) {
-				link.classList.remove('active');
-			});
-			tab.classList.add('active');
-		});
-	});
 
 	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 	const voiceCommand = document.getElementById("voice-command");
@@ -219,40 +196,65 @@
 		}
 	};
 
+	function appendUserMessage(message) {
+		// TODO: implement
+		const chatContent = document.getElementById("chat-content");
+
+		const userMessage = document.createElement("div");
+		userMessage.className = "chat chat-end";
+
+		const avatar = document.createElement("div");
+		avatar.className = "chat-image avatar";
+		const avatarImage = document.createElement("div");
+		avatarImage.className = "w-10 rounded-full";
+		avatarImage.innerHTML = '<img alt="Tailwind CSS chat bubble component" src="https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" />'
+		avatar.appendChild(avatarImage);
+
+		const chatBubble = document.createElement("div");
+		chatBubble.className = "chat-bubble";
+		chatBubble.textContent = message;
+
+		userMessage.appendChild(avatar);
+		userMessage.appendChild(chatBubble);
+
+		chatContent.appendChild(userMessage);
+	}
+
+	function appendCompanionMessage(message) {
+		// TODO: implement
+		const chatContent = document.getElementById("chat-content");
+
+		const companionMessage = document.createElement("div");
+		companionMessage.className = "chat chat-start"; 
+
+		const avatar = document.createElement("div");
+		avatar.className = "chat-image avatar";
+		const avatarImage = document.createElement("div");
+		avatarImage.className = "w-10 rounded-full";
+		avatarImage.innerHTML = '<img alt="Companion avatar" src="https://i.pinimg.com/originals/a5/39/07/a53907b134abfe7fdc26da8eeef1e268.jpg" />';
+		avatar.appendChild(avatarImage);
+
+		const chatBubble = document.createElement("div");
+		chatBubble.className = "chat-bubble";
+		chatBubble.textContent = message;
+
+		companionMessage.appendChild(avatar);
+		companionMessage.appendChild(chatBubble);
+
+		chatContent.appendChild(companionMessage);
+	}
+
+	function getCompanionResponse(userMessage) {
+		// TODO: hook up with LLM
+		return "placeholder"
+	}
+
 	recognition.onresult = (event) => {
 		const transcript = event.results[0][0].transcript;
-		const activeTab = document.querySelector('.tab-pane.show.active');
-		const activeMessageContainer = activeTab.querySelector('.message-container');
-		
-		// Add user message
-		var userMessageDiv = document.createElement('div');
-		userMessageDiv.classList.add('d-flex', 'flex-row-reverse', 'mb-3');
-		userMessageDiv.innerHTML = `
-			<div class="flex-shrink-0">
-				<img src="https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" alt="user" width="50" class="rounded-circle">
-			</div>
-			<div class="me-3">
-				<div class="bg-light rounded py-2 mb-2">
-					<p class="text-small mb-0 px-3">${transcript}</p>
-				</div>
-			</div>
-		`;
-		activeMessageContainer.appendChild(userMessageDiv);
 
-		// Add companion message
-		var companionMessageDiv = document.createElement('div');
-		companionMessageDiv.classList.add('d-flex', 'mb-3');
-		companionMessageDiv.innerHTML = `
-			<div class="flex-shrink-0">
-				<img src="https://i.pinimg.com/originals/a5/39/07/a53907b134abfe7fdc26da8eeef1e268.jpg" alt="companion" width="50" class="rounded-circle">
-			</div>
-			<div class="ms-3">
-				<div class="bg-light rounded py-2 mb-2">
-					<p class="text-small response mb-0 px-3">sup</p>
-				</div>
-			</div>
-		`;
-		activeMessageContainer.appendChild(companionMessageDiv);
+		appendUserMessage(transcript);
+		const companionMessage = getCompanionResponse(transcript); 
+		appendCompanionMessage(companionMessage);
 	};
 
 	recognition.onend = () => {
