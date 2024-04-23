@@ -17,7 +17,7 @@
 	<script defer src="src/populate_data.js"></script>
 	<title>PlayPal - Chat</title>
 </head>
-<body>
+<body class="h-screen flex flex-col">
 	<!--Navbar start-->
 	<div class="navbar bg-base-100">
 		<div class="navbar-start">
@@ -58,7 +58,7 @@
 	<!--Navbar end-->
 
 	<!-- Main container start -->
-	<div class="flex w-full">
+	<div class="flex w-full h-full">
 		<!-- Summary panel start -->
 		<div id="summary-panel" class="w-1/3 bg-neutral transition-all duration-300 ease-in-out flex flex-col overflow-hidden relative">
 			<div class="flex-1 p-4 bg-neutral" id="summary-content">
@@ -77,11 +77,11 @@
 		<!-- Summary panel end -->
 
 		<!-- Chat panel start -->
-		<div id="chat-panel" class="w-2/3 transition-all duration-300 ease-in-out flex relative items-center justify-start">
+		<div id="chat-panel" class="w-2/3 transition-all duration-300 ease-in-out flex relative justify-start">
 			<!-- Collapse Button start -->
             <button
                 id="collapse-button"
-                class="text-gray-600 bg-transparent hover:bg-blue-500 hover:text-white p-2"
+                class="text-gray-600 bg-transparent hover:bg-primary hover:text-white p-2"
             >
                 &lt;
             </button>
