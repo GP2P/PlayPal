@@ -197,7 +197,7 @@
 		}
 	}
 
-	updateChatSummary()
+	updateChatSummary() // async LLM call
 
 	function loadChatHistory() {
 		let convJson = localStorage.getItem(currentConversationID);
@@ -215,7 +215,8 @@
 	}
 	
 	loadChatHistory();
-	
+	displayChatSummary();
+
 
 	// writes given summary into summary panel
 	function updateSummaryPanel(summary) {
