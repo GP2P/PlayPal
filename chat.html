@@ -147,14 +147,16 @@
 
 	/* grab conversation history from local storage */
 	const currentConversationID = localStorage.getItem("currentConversationID");
-	const chatsObj = JSON.parse(localStorage.getItem("chat_list"));
-	let companionPersona;
-	for (let i = 0; i < chatsObj.chat_list.length; i++) {
-		if (chatsObj.chat_list[i].ID === currentConversationID) {
-			companionPersona = chatsObj.chat_list[i].AI_Persona;
-			break;
-		}
-	}
+	let convObj = JSON.parse(localStorage.getItem(currentConversationID));
+	const companionPersona = convObj.AI_Persona;
+	// const chatsObj = JSON.parse(localStorage.getItem("chat_list"));
+	// let companionPersona;
+	// for (let i = 0; i < chatsObj.chat_list.length; i++) {
+	// 	if (chatsObj.chat_list[i].ID === currentConversationID) {
+	// 		companionPersona = chatsObj.chat_list[i].AI_Persona;
+	// 		break;
+	// 	}
+	// }
 
 	function loadChatHistory() {
 		let convJson = localStorage.getItem(currentConversationID);
