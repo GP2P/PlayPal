@@ -258,10 +258,25 @@
 		chatContent.appendChild(companionMessage);
 	}
 
-	// generate a response to the user message 
-	function getCompanionResponse(userMessage) {
-		// TODO: hook up with LLM
-		return "placeholder"
+	// generate a response to the latest user message
+	// requires local storage to be updated with the latest user message first!
+	async function getCompanionResponse() {
+		// send all historical messages to the API
+		// const historicalMessages = JSON.parse(localStorage.getItem(currentConversationID)).Chat_History;
+		return await fetch(
+			'https://noggin.rea.gent/entire-ermine-9121',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer rg_v1_gbgypjwk1bk7lsel8il4zfjfr6a7718rlp8o_ngk',
+				},
+				body: JSON.stringify({
+					// fill variables here.
+					"userMsg": localStorage.getItem(currentConversationID),
+				}),
+			}
+		).then(response => response.text());
 	}
 
 	recognition.onresult = (event) => {
@@ -269,7 +284,7 @@
 
 		appendUserMessage(transcript);
 		updateChatHistory("user", transcript);
-		const companionMessage = getCompanionResponse(transcript); 
+		const companionMessage = getCompanionResponse();
 		appendCompanionMessage(companionMessage);
 		updateChatHistory(companionPersona, companionMessage);
 	};
