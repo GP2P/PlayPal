@@ -48,34 +48,40 @@
         <a class="btn" href="new.html">New Chat</a>
     </div>
 </div>
+</div>
 <div class="container mx-auto py-8">
     <h1 class="text-3xl font-bold text-center mb-8 text-primary">Chat History</h1>
     <div class="card">
         <div class="card-body">
             <div class="flex flex-wrap justify-between mb-4">
-                <div class="w-full md:w-1/2 mb-4 md:mb-0">
-                    <label for="gameFilter" class="block text-sm font-medium text-text-base">Filter by Game:</label>
-                    <select class="form-select mt-1 w-full border-none" id="gameFilter">
-                        <option value="all">All Games</option>
-                        <option value="minecraft">Minecraft</option>
-                        <option value="apex-legends">Apex Legends</option>
-                        <option value="league-of-legends">League of Legends</option>
-                        <option value="palworld">Palworld</option>
-                    </select>
+                <div class="w-full md:w-1/2 mb-4 md:mb-0 text-center"> <label for="gameFilter" class="block text-sm font-medium text-text-base">Filter by Game:</label>
+                    <details class="dropdown">
+                      <summary class="m-1 btn">Choose Game</summary>
+                      <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                        <li><a onclick="setFilter('all')">All Games</a></li>
+                        <li><a onclick="setFilter('minecraft')">Minecraft</a></li>
+                        <li><a onclick="setFilter('apex-legends')">Apex Legends</a></li>
+                        <li><a onclick="setFilter('league-of-legends')">League of Legends</a></li>
+                        <li><a onclick="setFilter('palworld')">Palworld</a></li>
+                      </ul>
+                    </details>
                 </div>
-                <div class="w-full md:w-1/2">
-                    <label for="aiFilter" class="block text-sm font-medium text-text-base">Filter by AI:</label>
-                    <select class="form-selectt mt-1 w-full border-none" id="aiFilter">
-                        <option value="all">All AIs</option>
-                        <option value="coach">Coach</option>
-                        <option value="Buddy">Buddy</option>
-                        <option value="boyfriend">Boyfriend</option>
-                        <option value="girlfriend">Girlfriend</option>
-                        <option value="teammate">Teammate</option>
-                        <option value="other">Other</option>
-                    </select>
+
+                <div class="w-full md:w-1/2 text-center"> <label for="aiFilter" class="block text-sm font-medium text-text-base">Filter by AI:</label>
+                    <details class="dropdown">
+                      <summary class="m-1 btn">Choose AI Persona</summary>
+                      <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                        <li><a onclick="setPersona('AI Coach')">AI Coach</a></li>
+                        <li><a onclick="setPersona('AI Buddy')">AI Buddy</a></li>
+                        <li><a onclick="setPersona('AI Boyfriend')">AI Boyfriend</a></li>
+                        <li><a onclick="setPersona('AI Girlfriend')">AI Girlfriend</a></li>
+                        <li><a onclick="setPersona('AI Friend')">AI Friend</a></li>
+                        <li><a onclick="setPersona('Other')">Other</a></li>
+                      </ul>
+                    </details>
                 </div>
             </div>
+
             <div class="flex flex-wrap -mx-4">
                 <div class="w-full md:w-1/2 px-4 mb-4">
                     <a href="chat.html" onclick="localStorage.setItem('currentConversationID', document.getElementById('convID_1').textContent)">  
