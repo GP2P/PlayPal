@@ -159,6 +159,7 @@
 	function loadChatHistory() {
 		let convJson = localStorage.getItem(currentConversationID);
 		let convObject = JSON.parse(convJson);
+		console.log(convObject); // test
 		
 		convObject.Chat_History.forEach((message) => {
 			if (message.role === "user") {
@@ -209,7 +210,6 @@
 
 	// append a new user message to the page
 	function appendUserMessage(message) {
-		// TODO: add to chat history json
 		const chatContent = document.getElementById("chat-content");
 
 		const userMessage = document.createElement("div");
@@ -234,7 +234,6 @@
 
 	// append a new companion message to the page
 	function appendCompanionMessage(message) {
-		// TODO: add to chat history json
 		// add message to webpage
 		const chatContent = document.getElementById("chat-content");
 

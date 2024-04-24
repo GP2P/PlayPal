@@ -104,6 +104,8 @@ if (!localStorage.getItem('chat_list')) {
 
 // {
 //     "ID": "conv_1",
+// 	   "AI_Persona": "Best Friend",
+//	   "Chat_Name": "Apex Legends: Complete the breakout challenge",
 //     "Chat_History": [
 //         {
 //             "role": "system",
@@ -125,7 +127,10 @@ if (!localStorage.getItem('chat_list')) {
 // }
 if (!localStorage.getItem('conv_1')) {
 	localStorage.setItem('conv_1', JSON.stringify({
-		"ID": "conv_1", "Chat_History": [{
+		"ID": "conv_1", 
+		"AI_Persona": "Best Friend",
+		"Chat_Name": "Apex Legends: Complete the breakout challenge",
+		"Chat_History": [{
 			"role": "system",
 			"content": "You are the user's Best Friend and a helpful assistant with their video game \"Apex Legends\"."
 		}, {
@@ -142,7 +147,10 @@ if (!localStorage.getItem('conv_1')) {
 
 if (!localStorage.getItem('conv_2')) {
 	localStorage.setItem('conv_2', JSON.stringify({
-		"ID": "conv_2", "Chat_History": [{
+		"ID": "conv_2", 
+		"AI_Persona": "Girlfriend",
+		"Chat_Name": "Minecraft: Build train network",
+		"Chat_History": [{
 			"role": "system",
 			"content": "You are the user's Girlfriend and a helpful assistant with their video game \"Minecraft\"."
 		}, {
