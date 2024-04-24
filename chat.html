@@ -288,8 +288,12 @@
 		updateChatHistory("user", transcript);
 		console.log('User said:', transcript);
 		const companionMessage = await getCompanionResponse();
-		appendCompanionMessage(companionMessage);
-		updateChatHistory(companionPersona, companionMessage);
+
+		// handel if user transcript was irrelevant
+		if (!companionMessage.startsWith("skip") && !companionMessage.startsWith("Skip") && companionMessage !== "..." && companionMessage !== "") {
+			appendCompanionMessage(companionMessage);
+			updateChatHistory(companionPersona, companionMessage);
+		} // else: irrelevant message, do nothing
 	};
 
 	recognition.onend = () => {
