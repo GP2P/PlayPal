@@ -90,6 +90,7 @@ if (!localStorage.getItem('chat_list')) {
 			"AI_Persona": "Best Friend",
 			"Goal": "Complete the breakout challenge",
 			"Last_Chat": "2023-01-23T12:13:39.231Z",
+			"Title": "Apex Legends: Complete the breakout challenge",
 			"Summary": "Completing the breakout challenge in Apex Legends. The user is stuck on the last level and needs help.",
 			"Summary_Date": "2023-01-23T12:13:29.231Z"
 		}, {
@@ -98,6 +99,7 @@ if (!localStorage.getItem('chat_list')) {
 			"AI_Persona": "Girlfriend",
 			"Goal": "Build train network",
 			"Last_Chat": "2023-01-23T12:13:39.231Z",
+			"Title": "Minecraft: Build train network",
 			"Summary": "Building train network from iron factory to home base through nether.",
 			"Summary_Date": "2023-01-23T12:13:29.231Z"
 		}]
@@ -109,7 +111,7 @@ if (!localStorage.getItem('chat_list')) {
 // {
 //     "ID": "conv_1",
 // 	   "AI_Persona": "Best Friend",
-//	   "Chat_Name": "Apex Legends: Complete the breakout challenge",
+//	   "Title": "Apex Legends: Complete the breakout challenge",
 //     "Chat_History": [
 //         {
 //             "role": "system",
@@ -135,7 +137,7 @@ if (!localStorage.getItem('conv_1')) {
 		"AI_Persona": "Best Friend",
 		"Game_Name": "Apex Legends",
 		"Goal": "Complete the breakout challenge",
-		"Chat_Name": "Apex Legends: Complete the breakout challenge",
+		"Title": "Apex Legends: Complete the breakout challenge",
 		"Chat_History": [{
 			"role": "system",
 			"content": "You are the user's Best Friend and a helpful assistant with their video game \"Apex Legends\"."
@@ -157,7 +159,7 @@ if (!localStorage.getItem('conv_2')) {
 		"AI_Persona": "Girlfriend",
 		"Game_Name": "Minecraft",
 		"Goal": "Build train network",
-		"Chat_Name": "Minecraft: Build train network",
+		"Title": "Minecraft: Build train network",
 		"Chat_History": [{
 			"role": "system",
 			"content": "You are the user's Girlfriend and a helpful assistant with their video game \"Minecraft\"."
