@@ -376,7 +376,6 @@
 
 		appendUserMessage(transcript);
 		updateChatHistory("user", transcript);
-		console.log('User said:', transcript);
 		const companionMessage = await getCompanionResponse();
 
 		// handel if user transcript was irrelevant
