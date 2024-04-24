@@ -56,19 +56,19 @@
             <div class="flex flex-wrap justify-between mb-4">
                 <div class="w-full md:w-1/2 mb-4 md:mb-0 text-center">
                     <label for="gameFilter" class="block text-lg font-bold text-text-base">Filter by Game:</label>
-                    <select class="select select-primary w-full max-w-xs">
+                    <select id="gameFilter" class="select select-primary w-full max-w-xs">
                         <option disabled selected>All Games</option>
-                        <option value="minecraft">Minecraft</option>
+                        <!-- <option value="minecraft">Minecraft</option>
                         <option value="apex-legends">Apex Legends</option>
                         <option value="league-of-legends">League of Legends</option>
-                        <option value="palworld">Palworld</option>
+                        <option value="palworld">Palworld</option> -->
                     </select>
                 </div>
 
                 <div class="w-full md:w-1/2 text-center">
-                    <label for="aiFilter" class="block text-lg font-bold text-text-base">Filter by AI:</label>
-                    <select id="aiFilter" class="select select-primary w-full max-w-xs">
-                        <option value="all">All AIs</option>
+                    <label for="personaFilter" class="block text-lg font-bold text-text-base">Filter by Personas:</label>
+                    <select id="personaFilter" class="select select-primary w-full max-w-xs">
+                        <option disabled selected>All Personas</option>
                         <!-- <option value="coach">AI Coach</option>
                         <option value="buddy">AI Buddy</option>
                         <option value="boyfriend">AI Boyfriend</option>
@@ -116,25 +116,25 @@
 </body>
 <script>
 const personaList = JSON.parse(localStorage.getItem('persona_list')).persona_list;
+const personaFilter = document.getElementById('personaFilter'); 
 
-// const gameFilter = document.getElementById('gameFilter');
-const personaFilter = document.getElementById('aiFilter'); 
-
-function sortPersonasByLastChat(a, b) {
-  return b.Last_Chat_Date - a.Last_Chat_Date;
-}
-
-personaList.sort(sortPersonasByLastChat);
-
-// Populate the game filter base on game data
-
-// Populate the persona filter
 personaList.forEach(persona => {
   const option = document.createElement('option');
   option.value = persona.Persona_Name;
   option.text = persona.Persona_Name;
   personaFilter.appendChild(option);
 });
+
+const gameList = JSON.parse(localStorage.getItem('game_list')).game_list;
+const gameFilter = document.getElementById('gameFilter');
+
+gameList.forEach(game => {
+  const option = document.createElement('option');
+  option.value = game.Game_Name;
+  option.text = game.Game_Name;
+  gameFilter.appendChild(option);
+});
+
 </script>
 
 </html>
