@@ -149,6 +149,7 @@
 	const currentConversationID = localStorage.getItem("currentConversationID");
 	let convObj = JSON.parse(localStorage.getItem(currentConversationID));
 	const companionPersona = convObj.AI_Persona;
+	const gameName = convObj.Game_Name;
 	// const chatsObj = JSON.parse(localStorage.getItem("chat_list"));
 	// let companionPersona;
 	// for (let i = 0; i < chatsObj.chat_list.length; i++) {
@@ -194,6 +195,39 @@
 		}
 	};
 
+	function updateGameLast_Played() {
+		const gameList = JSON.parse(localStorage.getItem("game_list")).game_list;
+		for (let i = 0; i < gameList.length; i++) {
+			if (gameList[i].Game_Name === gameName) {
+				gameList[i].Last_Played = new Date().toJSON();
+				break;
+			}
+		}
+		localStorage.setItem("game_list", JSON.stringify({game_list: gameList}));
+	}
+
+	function updatePersonaLast_Chat() {
+		const personaList = JSON.parse(localStorage.getItem("persona_list")).persona_list;
+		for (let i = 0; i < personaList.length; i++) {
+			if (personaList[i].Persona_Name === companionPersona) {
+				personaList[i].Last_Chat = new Date().toJSON();
+				break;
+			}
+		}
+		localStorage.setItem("persona_list", JSON.stringify({persona_list: personaList}));
+	}
+
+	function updateChatLast_Chat() {
+		const chatList = JSON.parse(localStorage.getItem("chat_list")).chat_list;
+		for (let i = 0; i < chatList.length; i++) {
+			if (chatList[i].ID === currentConversationID) {
+				chatList[i].Last_Chat = new Date().toJSON();
+				break;
+			}
+		}
+		localStorage.setItem("chat_list", JSON.stringify({chat_list: chatList}));
+	}
+
 	// add a message to chat history in local storage
 	function updateChatHistory(role, content) {
 		let convJson = localStorage.getItem(currentConversationID);
@@ -205,8 +239,12 @@
 		};
 
 		convObj.Chat_History.push(newUserMessage);
-		const updatedConvJson = JSON.stringify(convObj);
 
+		updateGameLast_Played();
+		updatePersonaLast_Chat();
+		updateChatLast_Chat();
+
+		const updatedConvJson = JSON.stringify(convObj);
 		localStorage.setItem(currentConversationID, updatedConvJson);
 	}
 
