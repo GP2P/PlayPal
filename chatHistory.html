@@ -21,7 +21,7 @@
 
     </style>
 </head>
-<body>
+<body>s
 <div class="navbar bg-base-100">
     <div class="navbar-start">
         <a class="btn btn-ghost text-xl" href="history.html">PlayPal</a>
@@ -79,7 +79,7 @@
             </div>
             <div class="flex flex-wrap -mx-4">
                 <div class="w-full md:w-1/2 px-4 mb-4">
-                    <a href="#" class="block hover:bg-card-hover rounded-lg transition duration-300 ease-in-out">
+                    <a href="chat.html" onclick="localStorage.setItem('currentConversationID', document.getElementById('convID_1').textContent)">  
                         <div class="bg-card rounded-lg p-6 chat-card">
                             <div class="chat-info">
                                 <h3 class="text-xl font-bold mb-2 text-primary">Minecraft Train Network</h3>
@@ -89,8 +89,9 @@
                             <div class="chat-summary mt-4">
                                 <p class="text-sm text-text-muted">We talked about how you implemented your train network in your satisfactory game so that: You have improved iron transportation bandwidth You missed a block and needs to redo everything!</p>
                             </div>
+                            <span id="convID_1" style="display: none;">conv_1</span>  
                         </div>
-                    </a>
+                        </a>
                 </div>
                 </div>
         </div>
