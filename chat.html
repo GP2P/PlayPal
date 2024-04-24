@@ -159,6 +159,52 @@
 	// 	}
 	// }
 
+	async function updateChatSummary() {
+		// find the chat in the chat list
+		const chatList = JSON.parse(localStorage.getItem("chat_list")).chat_list;
+		for (let i = 0; i < chatList.length; i++) {
+			if (chatList[i].ID === currentConversationID) {
+				// if the summary date is before the last chat date, update the summary
+				if (chatList[i].Summary_Date < chatList[i].Last_Chat) {
+					// ask the API for a new summary and title
+					const response = await fetch(
+						'https://noggin.rea.gent/main-possum-7776',
+						{
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+								Authorization: 'Bearer rg_v1_np2u0in5myj8s4li9ls0dqgoteyk8i4mwiqa_ngk',
+							},
+							body: JSON.stringify({
+								"history": localStorage.getItem(currentConversationID),
+							}),
+						}
+					).then(response => response.json());
+
+					const new_title = response.title;
+					const new_summary = response.summary;
+
+					// update the chat list object in local storage
+					chatList[i].Title = new_title;
+					chatList[i].Summary = new_summary;
+					chatList[i].Summary_Date = new Date().toJSON();
+					localStorage.setItem("chat_list", JSON.stringify({chat_list: chatList}));
+
+					// update the chat detail object in local storage
+					let convObject = JSON.parse(localStorage.getItem(currentConversationID));
+					convObject.Title = new_title;
+					convObject.Summary = new_summary;
+					localStorage.setItem(currentConversationID, JSON.stringify(convObject));
+
+					// todo: refresh the title and summary displayed on the page
+				}
+				break;
+			}
+		}
+	}
+
+	updateChatSummary()
+
 	function loadChatHistory() {
 		let convJson = localStorage.getItem(currentConversationID);
 		let convObject = JSON.parse(convJson);
