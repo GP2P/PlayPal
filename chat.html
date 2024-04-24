@@ -63,16 +63,7 @@
 	<div class="flex flex-1 w-full overflow-hidden">
 		<!-- Summary panel start -->
 		<div id="summary-panel" class="w-1/3 bg-neutral transition-all duration-300 ease-in-out flex flex-col relative">
-			<div class="flex-1 p-4 bg-neutral" style="color: white;" id="summary-content">
-					Created February 29, 2024<br>
-					Last Chat: March 10, 2024<br>
-					<br>
-					Key takeaways:<br>
-					- Crosshair Placement: Always keep the crosshair at head level and anticipate enemy positions to minimize reaction time when engaging.<br>
-					- Map Awareness: Learn common map callouts and develop a habit of checking minimap regularly to anticipate enemy rotations and plan strategic movements.<br>
-					- Utility Usage: Understand the utility of your chosen agent and utilize it effectively to control space, gather information, and support teammates.<br>
-					- Communication: Communicate clearly with teammates about enemy positions, intentions, and strategies. Effective communication enhances teamwork and coordination.<br>
-			</div>
+			<div class="flex-1 p-4 bg-neutral" style="color: white;" id="summary-content"></div>
 		</div>
 		<!-- Summary panel end -->
 
@@ -226,6 +217,14 @@
 	loadChatHistory();
 	
 
+	// writes given summary into summary panel
+	function updateSummaryPanel(summary) {
+		const formattedSummary = summary.replace(/\n/g, "<br>");
+		const summaryContentDiv = document.getElementById("summary-content");
+		summaryContentDiv.innerHTML = `<p style="color: white;">${formattedSummary}</p>`;
+	}
+
+	updateSummaryPanel(generateSummary());
 
 	// speech recognition logic
 	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -321,7 +320,7 @@
 		chatContent.appendChild(userMessage);
 
 		// scroll to bottom of chat
-		chatContent.scrollToop = chatContent.scrollHeight;
+		chatContent.scrollTop = chatContent.scrollHeight;
 	}
 
 	// append a new companion message to the page
@@ -349,7 +348,7 @@
 		chatContent.appendChild(companionMessage);
 
 		// scroll to bottom of chat
-		chatContent.scrollToop = chatContent.scrollHeight;
+		chatContent.scrollTop = chatContent.scrollHeight;
 	}
 
 	// generate a response to the latest user message
