@@ -100,10 +100,9 @@ gameList.forEach(game => {
 
 const chatList = JSON.parse(localStorage.getItem('chat_list')).chat_list;
 
-const chatContainer = document.querySelector('.flex.flex-wrap.-mx-4'); // Assuming the container element
+const chatContainer = document.querySelector('.flex.flex-wrap.-mx-4'); 
 
-// Clear existing chat elements (optional)
-chatContainer.innerHTML = ''; // This removes any existing chat elements
+chatContainer.innerHTML = ''; 
 
 chatList.forEach(chat => {
   // Create a new chat element based on chat data
@@ -115,11 +114,11 @@ chatList.forEach(chat => {
 
   const chatTitle = document.createElement('h3');
   chatTitle.classList.add('text-xl', 'font-bold', 'mb-2', 'text-primary');
-  chatTitle.textContent = chat.Game_Name; // Assuming Game_Name represents the chat title
+  chatTitle.textContent = chat.Game_Name;
 
   const createDate = document.createElement('p');
   createDate.classList.add('text-sm', 'text-text-muted');
-  createDate.textContent = `Create Date: Jan 23`; // Replace with actual creation date logic
+  createDate.textContent = `Create Date: Jan 23`; // Replace with actual create date logic
 
   const lastChat = document.createElement('p');
   lastChat.classList.add('text-sm', 'text-text-muted');
