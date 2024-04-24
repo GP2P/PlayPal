@@ -288,6 +288,11 @@
 		updateChatHistory("user", transcript);
 		console.log('User said:', transcript);
 		const companionMessage = await getCompanionResponse();
+
+		// handel if user transcript was irrelevant
+		if (companionMessage === "skip" || companionMessage === "Skip" || companionMessage === "..." || companionMessage === "") {
+			return;
+		}
 		appendCompanionMessage(companionMessage);
 		updateChatHistory(companionPersona, companionMessage);
 	};
