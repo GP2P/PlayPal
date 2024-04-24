@@ -89,13 +89,17 @@ if (!localStorage.getItem('chat_list')) {
 			"Game_Name": "Apex Legends",
 			"AI_Persona": "Best Friend",
 			"Goal": "Complete the breakout challenge",
-			"Summary": "Completing the breakout challenge in Apex Legends. The user is stuck on the last level and needs help."
+			"Last_Chat": "2023-01-23T12:13:39.231Z",
+			"Summary": "Completing the breakout challenge in Apex Legends. The user is stuck on the last level and needs help.",
+			"Summary_Date": "2023-01-23T12:13:29.231Z"
 		}, {
 			"ID": "conv_2",
 			"Game_Name": "Minecraft",
 			"AI_Persona": "Girlfriend",
 			"Goal": "Build train network",
-			"Summary": "Building train network from iron factory to home base through nether."
+			"Last_Chat": "2023-01-23T12:13:39.231Z",
+			"Summary": "Building train network from iron factory to home base through nether.",
+			"Summary_Date": "2023-01-23T12:13:29.231Z"
 		}]
 	}));
 }
@@ -129,6 +133,8 @@ if (!localStorage.getItem('conv_1')) {
 	localStorage.setItem('conv_1', JSON.stringify({
 		"ID": "conv_1", 
 		"AI_Persona": "Best Friend",
+		"Game_Name": "Apex Legends",
+		"Goal": "Complete the breakout challenge",
 		"Chat_Name": "Apex Legends: Complete the breakout challenge",
 		"Chat_History": [{
 			"role": "system",
@@ -147,8 +153,10 @@ if (!localStorage.getItem('conv_1')) {
 
 if (!localStorage.getItem('conv_2')) {
 	localStorage.setItem('conv_2', JSON.stringify({
-		"ID": "conv_2", 
+		"ID": "conv_2",
 		"AI_Persona": "Girlfriend",
+		"Game_Name": "Minecraft",
+		"Goal": "Build train network",
 		"Chat_Name": "Minecraft: Build train network",
 		"Chat_History": [{
 			"role": "system",
