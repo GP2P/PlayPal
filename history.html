@@ -56,25 +56,15 @@
             <div class="flex flex-wrap justify-between mb-4">
                 <div class="w-full md:w-1/2 mb-4 md:mb-0 text-center">
                     <label for="gameFilter" class="block text-lg font-bold text-text-base">Filter by Game:</label>
-                    <select class="select select-primary w-full max-w-xs">
+                    <select id="gameFilter" class="select select-primary w-full max-w-xs">
                         <option disabled selected>All Games</option>
-                        <option value="minecraft">Minecraft</option>
-                        <option value="apex-legends">Apex Legends</option>
-                        <option value="league-of-legends">League of Legends</option>
-                        <option value="palworld">Palworld</option>
                     </select>
                 </div>
 
                 <div class="w-full md:w-1/2 text-center">
-                    <label for="aiFilter" class="block text-lg font-bold text-text-base">Filter by AI:</label>
-                    <select id="aiFilter" class="select select-primary w-full max-w-xs">
-                        <option value="all">All AIs</option>
-                        <!-- <option value="coach">AI Coach</option>
-                        <option value="buddy">AI Buddy</option>
-                        <option value="boyfriend">AI Boyfriend</option>
-                        <option value="girlfriend">AI Girlfriend</option>
-                        <option value="friend">AI Friend</option>
-                        <option value="other">Other</option> -->
+                    <label for="personaFilter" class="block text-lg font-bold text-text-base">Filter by Personas:</label>
+                    <select id="personaFilter" class="select select-primary w-full max-w-xs">
+                        <option disabled selected>All Personas</option>
                     </select>
                 </div>
             <div class="flex flex-wrap -mx-4">
@@ -116,25 +106,86 @@
 </body>
 <script>
 const personaList = JSON.parse(localStorage.getItem('persona_list')).persona_list;
+const personaFilter = document.getElementById('personaFilter'); 
 
-// const gameFilter = document.getElementById('gameFilter');
-const personaFilter = document.getElementById('aiFilter'); 
-
-function sortPersonasByLastChat(a, b) {
-  return b.Last_Chat_Date - a.Last_Chat_Date;
-}
-
-personaList.sort(sortPersonasByLastChat);
-
-// Populate the game filter base on game data
-
-// Populate the persona filter
 personaList.forEach(persona => {
   const option = document.createElement('option');
   option.value = persona.Persona_Name;
   option.text = persona.Persona_Name;
   personaFilter.appendChild(option);
 });
+
+const gameList = JSON.parse(localStorage.getItem('game_list')).game_list;
+const gameFilter = document.getElementById('gameFilter');
+
+gameList.forEach(game => {
+  const option = document.createElement('option');
+  option.value = game.Game_Name;
+  option.text = game.Game_Name;
+  gameFilter.appendChild(option);
+});
+
+
+const chatList = JSON.parse(localStorage.getItem('chat_list')).chat_list;
+
+const chatContainer = document.querySelector('.flex.flex-wrap.-mx-4'); // Assuming the container element
+
+// Clear existing chat elements (optional)
+chatContainer.innerHTML = ''; // This removes any existing chat elements
+
+chatList.forEach(chat => {
+  // Create a new chat element based on chat data
+  const chatCard = document.createElement('div');
+  chatCard.classList.add('bg-card', 'rounded-lg', 'p-6', 'chat-card');
+
+  const chatInfo = document.createElement('div');
+  chatInfo.classList.add('chat-info');
+
+  const chatTitle = document.createElement('h3');
+  chatTitle.classList.add('text-xl', 'font-bold', 'mb-2', 'text-primary');
+  chatTitle.textContent = chat.Game_Name; // Assuming Game_Name represents the chat title
+
+  const createDate = document.createElement('p');
+  createDate.classList.add('text-sm', 'text-text-muted');
+  createDate.textContent = `Create Date: Jan 23`; // Replace with actual creation date logic
+
+  const lastChat = document.createElement('p');
+  lastChat.classList.add('text-sm', 'text-text-muted');
+  lastChat.textContent = `Last Chat: Feb 06`; // Replace with actual last chat date logic
+
+  chatInfo.appendChild(chatTitle);
+  chatInfo.appendChild(createDate);
+  chatInfo.appendChild(lastChat);
+
+  const chatSummary = document.createElement('div');
+  chatSummary.classList.add('chat-summary', 'mt-4');
+
+  const summaryText = document.createElement('p');
+  summaryText.classList.add('text-sm', 'text-text-muted');
+  summaryText.textContent = chat.Summary;
+
+  chatSummary.appendChild(summaryText);
+
+  const convID = document.createElement('span');
+  convID.id = `convID_${chat.ID}`; // Set unique ID based on chat ID
+  convID.style.display = 'none';
+  convID.textContent = chat.ID; // Set the conversation ID
+
+  chatCard.appendChild(chatInfo);
+  chatCard.appendChild(chatSummary);
+  chatCard.appendChild(convID);
+
+  // Create the link for the chat
+  const chatLink = document.createElement('a');
+  chatLink.href = 'chat.html';
+  chatLink.setAttribute('onclick', `localStorage.setItem('currentConversationID', '${chat.ID}')`); // Set onclick handler to store current conversation ID
+
+  chatCard.prepend(chatLink); // Add the link as the first child of the chat card
+
+  chatContainer.appendChild(chatCard);
+});
+
+  
 </script>
 
 </html>
