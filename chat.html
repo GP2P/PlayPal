@@ -156,30 +156,6 @@
 		isCollapsed = !isCollapsed;
 	});
 
-	const speechSynth = window.speechSynthesis;
-        const speakButton = document.getElementById("speak-button");
-
-        document.addEventListener('DOMContentLoaded', function() {
-        const targetNode = document.getElementById('chat-content');
-        const config = { childList: true, subtree: true };
-
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                mutation.addedNodes.forEach(function(node) {
-                    if (node.nodeType === 1 && node.querySelector('.response')) { 
-                        const messages = node.querySelectorAll('.response');
-                        messages.forEach(msg => {
-                            const speech = new SpeechSynthesisUtterance(msg.textContent);
-                            speechSynth.speak(speech);
-                        });
-                    }
-                });
-            });
-        });
-
-        observer.observe(targetNode, config);
-    });
-
 	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 	const voiceCommand = document.getElementById("voice-command");
 	const recognition = new SpeechRecognition();
@@ -235,7 +211,7 @@
 		avatar.appendChild(avatarImage);
 
 		const chatBubble = document.createElement("div");
-		chatBubble.className = "chat-bubble";
+		chatBubble.className = "chat-bubble response";
 		chatBubble.textContent = message;
 
 		companionMessage.appendChild(avatar);
@@ -267,6 +243,30 @@
 		console.error('Speech recognition error:', event.error);
 	};
 
+	//Outputs the response as a speech
+	const speechSynth = window.speechSynthesis;
+    const speakButton = document.getElementById("speak-button");
+
+	document.addEventListener('DOMContentLoaded', function() {
+		const targetNode = document.getElementById('chat-content');
+		const config = { childList: true, subtree: true };
+
+		const observer = new MutationObserver(function(mutations) {
+			mutations.forEach(function(mutation) {
+				mutation.addedNodes.forEach(function(node) {
+					if (node.nodeType === 1 && node.querySelector('.response')) { 
+						const messages = node.querySelectorAll('.response');
+						messages.forEach(msg => {
+							const speech = new SpeechSynthesisUtterance(msg.textContent);
+							speechSynth.speak(speech);
+						});
+					}
+				});
+			});
+		});
+
+		observer.observe(targetNode, config);
+    });
 
 </script>
 </html>
