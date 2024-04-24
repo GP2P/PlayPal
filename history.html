@@ -75,22 +75,6 @@
         </div>
     </div>
 </div>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.querySelector('.theme-controller');
-    const themePref = localStorage.getItem('theme');
-
-    if (themePref) {
-      document.documentElement.classList.add(themePref);
-    }
-
-    themeToggle.addEventListener('change', () => {
-      const currentTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
-      document.documentElement.classList.toggle(currentTheme);
-      localStorage.setItem('theme', currentTheme);
-    });
-  });
-</script>
 </body>
 <script>
 const personaList = JSON.parse(localStorage.getItem('persona_list')).persona_list;
