@@ -44,9 +44,6 @@
             </li>
         </ul>
     </div>
-    <div class="navbar-end">
-        <a class="btn" href="new.html">New Chat</a>
-    </div>
 </div>
 </div>
 <div class="container mx-auto py-8">
@@ -106,9 +103,10 @@ chatContainer.innerHTML = '';
 
 chatList.forEach(chat => {
   // Create a new chat element based on chat data
-  const chatCard = document.createElement('div');
+  const chatCard = document.createElement('a');
   chatCard.classList.add('bg-card', 'rounded-lg', 'p-6', 'chat-card');
-
+  chatCard.href = 'chat.html';
+  
   const chatInfo = document.createElement('div');
   chatInfo.classList.add('chat-info');
 
@@ -145,13 +143,7 @@ chatList.forEach(chat => {
   chatCard.appendChild(chatInfo);
   chatCard.appendChild(chatSummary);
   chatCard.appendChild(convID);
-
-  // Create the link for the chat
-  const chatLink = document.createElement('a');
-  chatLink.href = 'chat.html';
-  chatLink.setAttribute('onclick', `localStorage.setItem('currentConversationID', '${chat.ID}')`); // Set onclick handler to store current conversation ID
-
-  chatCard.prepend(chatLink); // Add the link as the first child of the chat card
+  chatCard.setAttribute('onclick', `localStorage.setItem('currentConversationID', '${chat.ID}')`);
 
   chatContainer.appendChild(chatCard);
 });
