@@ -41,8 +41,7 @@
 				<li>
 					<!--Chat Name start-->
 					<details>
-						<summary>Chat name is here</summary>
-						<!--todo: change name based on chat-->
+						<summary id="chat_title">Chat name is here</summary>
 						<ul class="p-2">
 							<li><a>Rename Chat</a></li>
 							<!--todo: implement-->
@@ -64,8 +63,7 @@
 	<div class="flex flex-1 w-full overflow-hidden">
 		<!-- Summary panel start -->
 		<div id="summary-panel" class="w-1/3 bg-neutral transition-all duration-300 ease-in-out flex flex-col relative">
-			<div class="flex-1 p-4 bg-neutral" id="summary-content">
-				<p style="color: white;">
+			<div class="flex-1 p-4 bg-neutral" style="color: white;" id="summary-content">
 					Created February 29, 2024<br>
 					Last Chat: March 10, 2024<br>
 					<br>
@@ -74,7 +72,6 @@
 					- Map Awareness: Learn common map callouts and develop a habit of checking minimap regularly to anticipate enemy rotations and plan strategic movements.<br>
 					- Utility Usage: Understand the utility of your chosen agent and utilize it effectively to control space, gather information, and support teammates.<br>
 					- Communication: Communicate clearly with teammates about enemy positions, intentions, and strategies. Effective communication enhances teamwork and coordination.<br>
-				</p>
 			</div>
 		</div>
 		<!-- Summary panel end -->
@@ -159,6 +156,12 @@
 	// 	}
 	// }
 
+	function displayChatSummary() {
+		const convObj = JSON.parse(localStorage.getItem(currentConversationID));
+		document.getElementById("chat_title").textContent = convObj.Title;
+		document.getElementById("summary-content").textContent = convObj.Summary;
+	}
+
 	async function updateChatSummary() {
 		// find the chat in the chat list
 		const chatList = JSON.parse(localStorage.getItem("chat_list")).chat_list;
@@ -196,7 +199,7 @@
 					convObject.Summary = new_summary;
 					localStorage.setItem(currentConversationID, JSON.stringify(convObject));
 
-					// todo: refresh the title and summary displayed on the page
+					displayChatSummary()
 				}
 				break;
 			}
