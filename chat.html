@@ -270,6 +270,9 @@
 		userMessage.appendChild(chatBubble);
 
 		chatContent.appendChild(userMessage);
+
+		// scroll to bottom of chat
+		chatContent.scrollToop = chatContent.scrollHeight;
 	}
 
 	// append a new companion message to the page
@@ -295,6 +298,9 @@
 		companionMessage.appendChild(chatBubble);
 
 		chatContent.appendChild(companionMessage);
+
+		// scroll to bottom of chat
+		chatContent.scrollToop = chatContent.scrollHeight;
 	}
 
 	// generate a response to the latest user message
