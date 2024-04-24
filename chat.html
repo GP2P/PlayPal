@@ -93,19 +93,7 @@
 			
 
 			<!-- Chat Content start -->
-			<div id="chat-content" class="flex-1 p-4">
-				<!-- Companion Message start -->
-				<div class="chat chat-start">
-					<div class="chat-image avatar">
-						<div class="w-10 rounded-full flex-column flex-grow-1">
-							<img alt="companion" src="https://i.pinimg.com/originals/a5/39/07/a53907b134abfe7fdc26da8eeef1e268.jpg" />
-						</div>
-					</div>
-					<div class="chat-bubble">Welcome back! I’m here to help you win a match in Valorant. Click the microphone button to chat with me!.</div>
-				</div>
-				<!-- Companion Message end -->
-				  
-			</div>
+			<div id="chat-content" class="flex-1 p-4"></div>
 			<!-- Chat Content end -->
 
 			<!-- Chat Button -->
@@ -127,6 +115,7 @@
 </body>
 
 <script>
+	// summary panel collapse functionality
 	const collapseButton = document.getElementById('collapse-button');
 	const summaryPanel = document.getElementById('summary-panel');
 	const summaryContent = document.getElementById('summary-content');
@@ -156,6 +145,36 @@
 		isCollapsed = !isCollapsed;
 	});
 
+	/* grab conversation history from local storage */
+	const currentConversationID = localStorage.getItem("currentConversationID");
+	const chatsObj = JSON.parse(localStorage.getItem("chat_list"));
+	let companionPersona;
+	for (let i = 0; i < chatsObj.chat_list.length; i++) {
+		if (chatsObj.chat_list[i].ID === currentConversationID) {
+			companionPersona = chatsObj.chat_list[i].AI_Persona;
+			break;
+		}
+	}
+
+	function loadChatHistory() {
+		let convJson = localStorage.getItem(currentConversationID);
+		let convObject = JSON.parse(convJson);
+		
+		convObject.Chat_History.forEach((message) => {
+			if (message.role === "user") {
+				appendUserMessage(message.content);
+			}
+			else if (message.role !== "system") {
+				appendCompanionMessage(message.content);
+			}
+		});
+	}
+	
+	loadChatHistory();
+	
+
+
+	// speech recognition logic
 	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 	const voiceCommand = document.getElementById("voice-command");
 	const recognition = new SpeechRecognition();
@@ -172,8 +191,25 @@
 		}
 	};
 
+	// add a message to chat history in local storage
+	function updateChatHistory(role, content) {
+		let convJson = localStorage.getItem(currentConversationID);
+		let convObj = JSON.parse(convJson);
+
+		const newUserMessage = {
+			role: role,
+			content: content
+		};
+
+		convObj.Chat_History.push(newUserMessage);
+		const updatedConvJson = JSON.stringify(convObj);
+
+		localStorage.setItem(currentConversationID, updatedConvJson);
+	}
+
+	// append a new user message to the page
 	function appendUserMessage(message) {
-		// TODO: implement
+		// TODO: add to chat history json
 		const chatContent = document.getElementById("chat-content");
 
 		const userMessage = document.createElement("div");
@@ -196,8 +232,10 @@
 		chatContent.appendChild(userMessage);
 	}
 
+	// append a new companion message to the page
 	function appendCompanionMessage(message) {
-		// TODO: implement
+		// TODO: add to chat history json
+		// add message to webpage
 		const chatContent = document.getElementById("chat-content");
 
 		const companionMessage = document.createElement("div");
@@ -220,6 +258,7 @@
 		chatContent.appendChild(companionMessage);
 	}
 
+	// generate a response to the user message 
 	function getCompanionResponse(userMessage) {
 		// TODO: hook up with LLM
 		return "placeholder"
@@ -229,8 +268,10 @@
 		const transcript = event.results[0][0].transcript;
 
 		appendUserMessage(transcript);
+		updateChatHistory("user", transcript);
 		const companionMessage = getCompanionResponse(transcript); 
 		appendCompanionMessage(companionMessage);
+		updateChatHistory(companionPersona, companionMessage);
 	};
 
 	recognition.onend = () => {
