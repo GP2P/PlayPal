@@ -115,23 +115,9 @@
 </script>
 </body>
 <script>
-if (!localStorage.getItem('persona_list')) {
-  localStorage.setItem('persona_list', JSON.stringify({
-    "persona_list": [{
-      "Persona_Name": "Girlfriend",
-      "Last_Chat": "2023-01-23T12:13:39.231Z",
-      "Last_Chat_Date": new Date("2023-01-23T12:13:39.231Z").getTime() // Convert for comparison (assuming a "Last_Chat_Date" property doesn't exist)
-    }, {
-      "Persona_Name": "Best Friend",
-      "Last_Chat": "2024-03-29T12:13:39.231Z",
-      "Last_Chat_Date": new Date("2024-03-29T12:13:39.231Z").getTime() 
-    }]
-  }));
-}
-
 const personaList = JSON.parse(localStorage.getItem('persona_list')).persona_list;
 
-const gameFilter = document.getElementById('gameFilter');
+// const gameFilter = document.getElementById('gameFilter');
 const personaFilter = document.getElementById('aiFilter'); 
 
 function sortPersonasByLastChat(a, b) {
