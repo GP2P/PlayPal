@@ -219,6 +219,7 @@
 				updateSummaryHeader(chatList[i].Game_Name, chatList[i].Goal, chatList[i].AI_Persona, chatList[i].Last_Chat);
 				let convObject = JSON.parse(localStorage.getItem(currentConversationID));
 				updateSummaryPanel(convObject.Summary);
+				document.getElementById("chat_title").textContent = convObj.Title;
 			}
 		}
 	}
