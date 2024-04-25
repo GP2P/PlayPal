@@ -139,6 +139,7 @@
 	/* grab conversation history from local storage */
 	const currentConversationID = localStorage.getItem("currentConversationID");
 	let convObj = JSON.parse(localStorage.getItem(currentConversationID));
+	console.log(convObj);
 	const companionPersona = convObj.AI_Persona;
 	const gameName = convObj.Game_Name;
 	// const chatsObj = JSON.parse(localStorage.getItem("chat_list"));
@@ -207,6 +208,7 @@
 					convObject.Summary = new_summary;
 					localStorage.setItem(currentConversationID, JSON.stringify(convObject));
 				}
+				displayChatSummary();
 				break;
 			}
 		}
@@ -224,7 +226,9 @@
 		}
 	}
 
-	updateChatSummary().then(() => displayChatSummary());
+	// updateChatSummary().then(() => displayChatSummary());
+	updateChatSummary();
+	displayChatSummary();
 	
 	function updateSummaryHeader(game, goal, persona, lastDate) {
 		// TODO

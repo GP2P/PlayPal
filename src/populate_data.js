@@ -154,6 +154,7 @@ if (!localStorage.getItem('conv_1')) {
 		"Game_Name": "Apex Legends",
 		"Goal": "Complete the breakout challenge",
 		"Title": "Apex Legends: Complete the breakout challenge",
+		"Summary": "The user wants to complete the breakout challenge in Apex Legends",
 		"Chat_History": [{
 			"role": "system",
 			"content": "You are the user's Best Friend and a helpful assistant with their video game \"Apex Legends\"."
@@ -176,6 +177,7 @@ if (!localStorage.getItem('conv_2')) {
 		"Game_Name": "Minecraft",
 		"Goal": "Build train network",
 		"Title": "Minecraft: Build train network",
+		"Summary": "The user wants to build a train network in Minecraft",
 		"Chat_History": [{
 			"role": "system",
 			"content": "You are the user's Girlfriend and a helpful assistant with their video game \"Minecraft\"."
