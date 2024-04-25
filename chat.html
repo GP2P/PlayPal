@@ -157,7 +157,7 @@
 		for (let i = 0; i < chatList.length; i++) {
 			if (chatList[i].ID === currentConversationID) {
 				// if the summary date is before the last chat date, update the summary
-				if (true || chatList[i].Summary_Date < chatList[i].Last_Chat) { // TODO: remove true, just for debugging
+				if (chatList[i].Summary_Date < chatList[i].Last_Chat) {
 					// ask the API for a new summary and title
 					console.log("generating summary...");
 					const response = await fetch(
@@ -189,18 +189,24 @@
 					convObject.Title = new_title;
 					convObject.Summary = new_summary;
 					localStorage.setItem(currentConversationID, JSON.stringify(convObject));
-
-					// todo: refresh the title and summary displayed on the page
-					console.log(convObj.Summary);
-					updateSummaryHeader(chatList[i].Game_Name, chatList[i].Goal, chatList[i].AI_Persona, chatList[i].Last_Chat);
-					updateSummaryPanel(convObj.Summary);
 				}
 				break;
 			}
 		}
 	}
 
-	updateChatSummary()
+	function displayChatSummary() {
+		const chatList = JSON.parse(localStorage.getItem("chat_list")).chat_list;
+		for (let i = 0; i < chatList.length; i++) {
+			if (chatList[i].ID === currentConversationID) {
+				updateSummaryHeader(chatList[i].Game_Name, chatList[i].Goal, chatList[i].AI_Persona, chatList[i].Last_Chat);
+				updateSummaryPanel(convObj.Summary);
+			}
+		}
+	}
+
+	updateChatSummary();
+	displayChatSummary();
 
 	function loadChatHistory() {
 		let convJson = localStorage.getItem(currentConversationID);
@@ -225,11 +231,22 @@
 		// TODO
 		const summaryContentDiv = document.getElementById("summary-content");
 		const summaryHeader = summaryContentDiv.querySelector("h2");
+
+		const lastDateObj = new Date(lastDate);
+		const formattedDate = new Intl.DateTimeFormat("en-US", {
+				year: "numeric",
+				month: "long",
+				day: "numeric",
+				hour: "numeric",
+				minute:  "numeric",
+				timeZoneName: "short"
+			}).format(lastDateObj);
+
 		summaryHeader.innerHTML = `
 			Game: ${game}<br>
 			Goal: ${goal}<br>
 			Companion: ${persona}<br>
-			Last Chat: ${lastDate}<br><br>
+			Last Chat: ${formattedDate}<br><br>
 		`;
 	}
 	// writes given summary into summary panel
