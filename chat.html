@@ -272,6 +272,7 @@
 	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 	const voiceCommand = document.getElementById("voice-command");
 	const recognition = new SpeechRecognition();
+	let isListening = false;
 
 	recognition.continuous = true;
 	recognition.lang = "en-US";
@@ -279,10 +280,14 @@
 	recognition.maxAlternatives = 1;
 
 	voiceCommand.onclick = () => {
-		while (!recognition.ongoing) {
-			recognition.start();
-			voiceCommand.classList.add("listening");
-		}
+		if (isListening) {
+            recognition.stop();
+            voiceCommand.classList.remove("listening");
+        } else {
+            recognition.start();
+            voiceCommand.classList.add("listening");
+        }
+        isListening = !isListening;
 	};
 
 	function updateGameLast_Played() {
@@ -438,8 +443,11 @@
 	}
 
 	recognition.onend = () => {
-		voiceCommand.classList.remove("listening");
-		recognition.ongoing = false;
+		if (isListening) {
+            setTimeout(function() {
+                recognition.start();
+            }, 100);
+        }
 	};
 
 	recognition.onerror = (event) => {
