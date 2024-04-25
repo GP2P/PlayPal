@@ -32,6 +32,22 @@ if (!localStorage.getItem('game_list')) {
 			"Game_Name": "Minecraft", "Last_Played": "2024-04-03T18:25:43.511Z", "Icon_Url": ""
 		}, {
 			"Game_Name": "Apex Legends", "Last_Played": "2024-03-23T12:13:39.231Z", "Icon_Url": ""
+		}, {
+			"Game_Name": "Fortnite", "Last_Played": "2024-03-23T12:13:39.231Z", "Icon_Url": ""
+		}, {
+			"Game_Name": "Valorant", "Last_Played": "2024-03-23T12:13:39.231Z", "Icon_Url": "https://media.npr.org/assets/img/2020/05/07/valorant_jett_wide-a62d0cdd87d0edffbabda5a6efe7bb62e57554a5.jpg"
+		}, {
+			"Game_Name": "League of Legends", "Last_Played": "2024-03-23T12:13:39.231Z", "Icon_Url": ""
+		}, {
+			"Game_Name": "Overwatch", "Last_Played": "2024-03-23T12:13:39.231Z", "Icon_Url": ""
+		}, {
+			"Game_Name": "Call of Duty: Warzone", "Last_Played": "2024-03-23T12:13:39.231Z", "Icon_Url": ""
+		}, {
+			"Game_Name": "Among Us", "Last_Played": "2024-03-23T12:13:39.231Z", "Icon_Url": ""
+		}, {
+			"Game_Name": "Genshin Impact", "Last_Played": "2024-03-23T12:13:39.231Z", "Icon_Url": ""
+		}, {
+			"Game_Name": "Cyberpunk 2077", "Last_Played": "2024-03-23T12:13:39.231Z", "Icon_Url": ""
 		}]
 	}));
 }
