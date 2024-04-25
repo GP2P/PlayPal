@@ -7,7 +7,7 @@ if (!localStorage.getItem('currentConversationID')) {
 
 // add latestConversationID
 if (!localStorage.getItem('latestConversationID')) {
-	localStorage.setItem('latestConversationID', 'conv_2');
+	localStorage.setItem('latestConversationID', '2');
 }
 
 // add game_list
