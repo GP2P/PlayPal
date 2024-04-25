@@ -41,13 +41,12 @@
 				<li>
 					<!--Chat Name start-->
 					<details>
-						<summary>Chat name is here</summary>
-						<!--todo: change name based on chat-->
+						<summary id="chat_title"></summary>
 						<ul class="p-2">
 							<li><a>Rename Chat</a></li>
 							<!--todo: implement-->
-							<li><a class="text-error">Delete Chat</a></li>
-							<!--todo: implement (local storage remove)-->
+							<li><a class="text-error" href="history.html"
+							       onclick="localStorage.removeItem(currentConversationID)">Delete Chat</a></li>
 						</ul>
 					</details>
 					<!--Chat Name end-->
