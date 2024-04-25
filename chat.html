@@ -421,7 +421,12 @@
 		if (!companionMessage.startsWith("skip") && !companionMessage.startsWith("Skip") && companionMessage !== "..." && companionMessage !== "") {
 			appendCompanionMessage(companionMessage);
 			updateChatHistory(companionPersona, companionMessage);
-		} // else: irrelevant message, do nothing
+		} // else: irrelevant message
+		else {
+			appendCompanionMessage("...");
+			updateChatHistory(companionPersona, "...");
+		}
+
 	};
 
 	recognition.onend = () => {
@@ -449,7 +454,8 @@
 						const messages = node.querySelectorAll('.response');
 						messages.forEach(msg => {
 							const speech = new SpeechSynthesisUtterance(msg.textContent);
-							speechSynth.speak(speech);
+							if (msg.textContent !== "...")
+								speechSynth.speak(speech);
 						});
 					}
 				});
