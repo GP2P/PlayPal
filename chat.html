@@ -151,6 +151,24 @@
 	// 	}
 	// }
 
+	function loadChatHistory() {
+		let convJson = localStorage.getItem(currentConversationID);
+		let convObject = JSON.parse(convJson);
+		console.log(convObject); // test
+		
+		convObject.Chat_History.forEach((message) => {
+			if (message.role === "user") {
+				appendUserMessage(message.content);
+			}
+			else if (message.role !== "system") {
+				appendCompanionMessage(message.content);
+			}
+		});
+	}
+	
+	loadChatHistory();
+
+	// load summary
 	async function updateChatSummary() {
 		// find the chat in the chat list
 		const chatList = JSON.parse(localStorage.getItem("chat_list")).chat_list;
@@ -176,7 +194,7 @@
 
 					const new_title = response.title;
 					const new_summary = response.summary;
-					console.log(new_summary);
+					console.log(`summary generated: ${new_summary}`);
 
 					// update the chat list object in local storage
 					chatList[i].Title = new_title;
@@ -200,32 +218,13 @@
 		for (let i = 0; i < chatList.length; i++) {
 			if (chatList[i].ID === currentConversationID) {
 				updateSummaryHeader(chatList[i].Game_Name, chatList[i].Goal, chatList[i].AI_Persona, chatList[i].Last_Chat);
-				updateSummaryPanel(convObj.Summary);
+				let convObject = JSON.parse(localStorage.getItem(currentConversationID));
+				updateSummaryPanel(convObject.Summary);
 			}
 		}
 	}
 
-	updateChatSummary();
-	displayChatSummary();
-
-	function loadChatHistory() {
-		let convJson = localStorage.getItem(currentConversationID);
-		let convObject = JSON.parse(convJson);
-		console.log(convObject); // test
-		
-		convObject.Chat_History.forEach((message) => {
-			if (message.role === "user") {
-				appendUserMessage(message.content);
-			}
-			else if (message.role !== "system") {
-				appendCompanionMessage(message.content);
-			}
-		});
-	}
-	
-	loadChatHistory();
-
-	// load summary
+	updateChatSummary().then(() => displayChatSummary());
 	
 	function updateSummaryHeader(game, goal, persona, lastDate) {
 		// TODO
@@ -251,7 +250,6 @@
 	}
 	// writes given summary into summary panel
 	function updateSummaryPanel(summary) {
-		console.log(`updateSummaryPanel(${summary})`);
 		const formattedSummary = summary.replace(/\n/g, "<br>");
 		const summaryContentDiv = document.getElementById("summary-content");
 		const summaryParagraph = summaryContentDiv.querySelector("p");
