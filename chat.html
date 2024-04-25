@@ -273,13 +273,13 @@
 	const voiceCommand = document.getElementById("voice-command");
 	const recognition = new SpeechRecognition();
 
-	recognition.continuous = false;
+	recognition.continuous = true;
 	recognition.lang = "en-US";
 	recognition.interimResults = false;
 	recognition.maxAlternatives = 1;
 
 	voiceCommand.onclick = () => {
-		if (!recognition.ongoing) {
+		while (!recognition.ongoing) {
 			recognition.start();
 			voiceCommand.classList.add("listening");
 		}
@@ -395,7 +395,7 @@
 
 	// generate a response to the latest user message
 	// requires local storage to be updated with the latest user message first!
-	async function getCompanionResponse() {
+	async function getCompanionResponse(latestMessage) {
 		// send all historical messages to the API
 		// const historicalMessages = JSON.parse(localStorage.getItem(currentConversationID)).Chat_History;
 		const response = await fetch(
@@ -408,7 +408,8 @@
 				},
 				body: JSON.stringify({
 					// fill variables here.
-					"userMsg": localStorage.getItem(currentConversationID),
+					//"userMsg": localStorage.getItem(currentConversationID),
+					"userMsg": latestMessage,
 				}),
 			}
 		).then(response => response.text());
@@ -416,23 +417,25 @@
 	}
 
 	recognition.onresult = async (event) => {
-		const transcript = event.results[0][0].transcript;
-
+		// Handling the latest result
+		const lastResultIndex = event.results.length - 1;
+		const transcript = event.results[lastResultIndex][0].transcript;
+		
 		appendUserMessage(transcript);
 		updateChatHistory("user", transcript);
-		const companionMessage = await getCompanionResponse();
-
-		// handel if user transcript was irrelevant
-		if (!companionMessage.startsWith("skip") && !companionMessage.startsWith("Skip") && companionMessage !== "..." && companionMessage !== "") {
-			appendCompanionMessage(companionMessage);
-			updateChatHistory(companionPersona, companionMessage);
-		} // else: irrelevant message
-		else {
-			appendCompanionMessage("...");
-			updateChatHistory(companionPersona, "...");
-		}
-
+		const companionMessage = await getCompanionResponse(transcript);
+		handleCompanionResponse(companionMessage);
+		updateChatHistory("companion", companionMessage);
 	};
+
+	function handleCompanionResponse(companionMessage) {
+		if (!companionMessage.startsWith("Skip") && companionMessage !== "...") {
+			appendCompanionMessage(companionMessage);
+			updateChatHistory("companion", companionMessage);
+		} else {
+			appendCompanionMessage("...");
+		}
+	}
 
 	recognition.onend = () => {
 		voiceCommand.classList.remove("listening");
