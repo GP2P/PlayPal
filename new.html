@@ -13,8 +13,30 @@
             text-align: center;
             margin: 0;
             padding: 0;
+            background-image: url('https://devforum.roblox.com/uploads/short-url/pWUtWXByBdk1PqiEEhH18mP8kmA.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
+        /* Overlay form background */
+        .form-background {
+            position: relative;
+            left: 28%;
+            width: 38%; /* or a fixed width like 600px */
+            max-width: 1000px;
+            background: rgb(45, 156, 181);
+            border-radius: 25px;
+        }
+
+        /* Style for titles inside the form */
+        .form-background h2 {
+            color: #333; /* Adjust the color as needed */
+            margin-bottom: 16px;
+        }
+        
         .input-area {
+            padding-top: 7%;
             margin-top: 20px;
             position: relative;
             width: 30%; 
@@ -38,6 +60,7 @@
         .option-item:hover {
             background-color: #f8f9fa;
         }
+
     </style>
 </head>
 <body>
@@ -71,10 +94,9 @@
 	</div>
 </div>
 <!--Navbar end-->
-    <div>
-        <div class="input-area">
-            
-            <h1 class="text-3xl font-bold text-center mb-8">What game are you playing today?</h1>
+<div class="form-background">
+    <div class="input-area">
+            <h3 class="text-3xl font-bold text-center mb-8">What game are you playing today?</h3>
             <input type="text" id="gameInput" placeholder="Type a game name..." class="input input-bordered">
             <button onclick="toggleDropdown('gameDropdown')" class="dropdown-button">
                 <span>Game Suggestions</span>
@@ -114,10 +136,10 @@
                     <span class="ml-3 block truncate">Objective Suggestions</span>
                 </span>
             </button> -->
-            <button onclick="toggleDropdown('objectiveDropdown')" class="dropdown-button">
+            <!-- <button onclick="toggleDropdown('objectiveDropdown')" class="dropdown-button">
                 <span>Objective Suggestions</span>
                 <span class="dropdown-arrow">▼</span>
-            </button>
+            </button> -->
 
             <ul id="objectiveDropdown" class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" style="display: none;">
                 <li class="option-item" onclick="setObjective('Win a match')">
@@ -157,10 +179,12 @@
             </ul>
             <div id="selectedPersona">Selected Persona: None</div>
         </div>
-    </div>
+        <br>
+        <a href="chat.html"><button class="btn btn-outline btn-success" onclick="storeData()">Next</button></a>
+
     </div>
     <br>
-    <a href="chat.html"><button class="btn btn-outline btn-success" onclick="storeData()">Next</button></a>
+    <!-- <a href="chat.html"><button class="btn btn-outline btn-success" onclick="storeData()">Next</button></a> -->
 
 
     <script>
@@ -253,6 +277,17 @@
 	        }
 	        localStorage.setItem('conv_' + chatID, JSON.stringify(data));
         }
+        const gameList = JSON.parse(localStorage.getItem('game_list')).game_list;
+        const gameDropdown = document.getElementById('gameDropdown');
+        
+        gameList.forEach(game => {
+            const li = document.createElement('li');
+            li.className = 'option-item'; // Ensure it has the right class for styling
+            li.onclick = function() { setGame(game.Game_Name); }; // Proper event handler
+            li.innerHTML = `<img src="https://cdnb.artstation.com/p/assets/images/images/006/024/065/medium/anthony-beyer-anthony-beyer-logo.jpg?1495490840" alt=""> ${game.Game_Name}`; // Add image and text
+            gameDropdown.appendChild(li);
+        });
+        
     </script>
 </body>
 </html>
