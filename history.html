@@ -121,6 +121,19 @@ function filterChats(chats, gameFilterValue, personaFilterValue) {
   });
 }
 
+function formatDate(dateString) {
+  // Create a new Date object from the ISO 8601 formatted string
+  const date = new Date(dateString);
+
+  // Get individual components for year, month, day
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // Months are zero-indexed (January is 0)
+  const day = date.getDate();
+
+  // Format the date components using template literals
+  return `${month}/${day}/${year}`;
+}
+
 function displayChats(filteredChats) {
   filteredChats.forEach(chat => {
     // Create a new chat element based on chat data
@@ -137,11 +150,11 @@ function displayChats(filteredChats) {
 
     const createDate = document.createElement('p');
     createDate.classList.add('text-sm', 'text-text-muted');
-    createDate.textContent = `Create Date: Jan 23`; // Replace with actual create date logic
+    createDate.textContent = formatDate(chat.Summary_Date); // Replace with actual create date logic
 
-    const lastChat = document.createElement('p');
-    lastChat.classList.add('text-sm', 'text-text-muted');
-    lastChat.textContent = `Last Chat: Feb 06`; // Replace with actual last chat date logic
+    // const lastChat = document.createElement('p');
+    // lastChat.classList.add('text-sm', 'text-text-muted');
+    // lastChat.textContent = `Last Chat: Feb 06`; // Replace with actual last chat date logic
 
     const chatSummary = document.createElement('p');
     chatSummary.classList.add('text-base', 'text-text-muted');
@@ -149,7 +162,7 @@ function displayChats(filteredChats) {
 
     chatInfo.appendChild(chatTitle);
     chatInfo.appendChild(createDate);
-    chatInfo.appendChild(lastChat);
+    // chatInfo.appendChild(lastChat);
     chatInfo.appendChild(chatSummary);
 
     chatCard.appendChild(chatInfo);
