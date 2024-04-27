@@ -114,7 +114,6 @@ gameList.forEach(game => {
 const chatList = JSON.parse(localStorage.getItem('chat_list')).chat_list;
 const chatContainer = document.querySelector('.flex.flex-wrap.-mx-4'); 
 
-// Clear chat container before applying filters
 chatContainer.innerHTML = ''; 
 
 function filterChats(chats, gameFilterValue, personaFilterValue) {
@@ -141,9 +140,8 @@ function formatDate(dateString) {
 
   // Get individual components for year, month, day
   const year = date.getFullYear();
-  const month = date.getMonth() + 1; // Months are zero-indexed (January is 0)
+  const month = date.getMonth() + 1;
   const day = date.getDate();
-  // Format the date components using template literals
   return isNaN(day)? "Date Unknown" : `${month}/${day}/${year}`;
 }
 
@@ -160,17 +158,17 @@ function displayChats(filteredChats) {
     const chatTitle = document.createElement('h1');
     chatTitle.classList.add('text-xl', 'font-bold', 'mb-2', 'text-primary');
     chatTitle.textContent = chat.Title|| "Untitled";
-    chatTitle.style.fontFamily = 'Lora'; // Clear, easy-to-read font
+    chatTitle.style.fontFamily = 'Lora';
 
     const gameName = document.createElement('h1');
     gameName.classList.add('text-xl', 'font-bold', 'mb-2', 'text-primary');
     gameName.textContent = chat.Game_Name;
-    gameName.style.fontFamily = 'cursive'; // Playful font for game titles
+    gameName.style.fontFamily = 'cursive';
 
     const aiPersona = document.createElement('h1');
     aiPersona.classList.add('text-xl', 'font-italic', 'mb-2', 'text-primary');
     aiPersona.textContent = "Persona: " + chat.AI_Persona;
-    aiPersona.style.fontFamily = 'Lora'; // Distinctive font for AI Persona
+    aiPersona.style.fontFamily = 'Lora'; 
 
 
     const createDate = document.createElement('p');
@@ -195,15 +193,13 @@ function displayChats(filteredChats) {
   });
 }
 
-// Initial display of all chats
 displayChats(chatList);
 
-// Event listeners for filter selections
 gameFilter.addEventListener('change', () => {
   const selectedGame = gameFilter.value;
   const selectedPersona = personaFilter.value;
   const filteredChats = filterChats(chatList, selectedGame, selectedPersona);
-  chatContainer.innerHTML = ''; // Clear container before repopulating
+  chatContainer.innerHTML = '';
   displayChats(filteredChats);
 });
 
@@ -211,7 +207,7 @@ personaFilter.addEventListener('change', () => {
   const selectedGame = gameFilter.value;
   const selectedPersona = personaFilter.value;
   const filteredChats = filterChats(chatList, selectedGame, selectedPersona);
-  chatContainer.innerHTML = ''; // Clear container before repopulating
+  chatContainer.innerHTML = '';
   displayChats(filteredChats);
 });
 
