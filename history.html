@@ -145,15 +145,11 @@ function displayChats(filteredChats) {
 
     const chatTitle = document.createElement('h3');
     chatTitle.classList.add('text-xl', 'font-bold', 'mb-2', 'text-primary');
-    chatTitle.textContent = chat.Game_Name;
+    chatTitle.textContent = chat.Title;
 
     const createDate = document.createElement('p');
     createDate.classList.add('text-sm', 'text-text-muted');
     createDate.textContent = formatDate(chat.Summary_Date)
-
-    // const lastChat = document.createElement('p');
-    // lastChat.classList.add('text-sm', 'text-text-muted');
-    // lastChat.textContent = `Last Chat: Feb 06`; // Replace with actual last chat date logic
 
     const chatSummary = document.createElement('p');
     chatSummary.classList.add('text-base', 'text-text-muted');
@@ -161,7 +157,6 @@ function displayChats(filteredChats) {
 
     chatInfo.appendChild(chatTitle);
     chatInfo.appendChild(createDate);
-    // chatInfo.appendChild(lastChat);
     chatInfo.appendChild(chatSummary);
 
     chatCard.appendChild(chatInfo);
