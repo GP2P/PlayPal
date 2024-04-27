@@ -129,9 +129,8 @@ function formatDate(dateString) {
   const year = date.getFullYear();
   const month = date.getMonth() + 1; // Months are zero-indexed (January is 0)
   const day = date.getDate();
-
   // Format the date components using template literals
-  return `${month}/${day}/${year}`;
+  return isNaN(day)? "Date Unknown" : `${month}/${day}/${year}`;
 }
 
 function displayChats(filteredChats) {
@@ -150,7 +149,7 @@ function displayChats(filteredChats) {
 
     const createDate = document.createElement('p');
     createDate.classList.add('text-sm', 'text-text-muted');
-    createDate.textContent = formatDate(chat.Summary_Date); // Replace with actual create date logic
+    createDate.textContent = formatDate(chat.Summary_Date)
 
     // const lastChat = document.createElement('p');
     // lastChat.classList.add('text-sm', 'text-text-muted');
