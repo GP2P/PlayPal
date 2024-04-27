@@ -57,14 +57,14 @@
                 <div class="w-full md:w-1/2 mb-4 md:mb-0 text-center">
                     <label for="gameFilter" class="block text-lg font-bold text-text-base">Filter by Game:</label>
                     <select id="gameFilter" class="select select-primary w-full max-w-xs">
-                        <option disabled selected>All Games</option>
+                        <option selected>All Games</option>
                     </select>
                 </div>
 
                 <div class="w-full md:w-1/2 text-center">
                     <label for="personaFilter" class="block text-lg font-bold text-text-base">Filter by Personas:</label>
                     <select id="personaFilter" class="select select-primary w-full max-w-xs">
-                        <option disabled selected>All Personas</option>
+                        <option selected>All Personas</option>
                     </select>
                 </div>
             <div class="flex flex-wrap -mx-4">
@@ -145,7 +145,19 @@ function displayChats(filteredChats) {
 
     const chatTitle = document.createElement('h3');
     chatTitle.classList.add('text-xl', 'font-bold', 'mb-2', 'text-primary');
-    chatTitle.textContent = chat.Title;
+    chatTitle.textContent = chat.Title|| "Untitled";
+    chatTitle.style.fontFamily = 'sans-serif'; // Clear, easy-to-read font
+
+    const gameName = document.createElement('h6');
+    gameName.classList.add('text-xl', 'font-bold', 'mb-2', 'text-primary');
+    gameName.textContent = chat.Game_Name;
+    gameName.style.fontFamily = 'cursive'; // Playful font for game titles
+
+    const aiPersona = document.createElement('h7');
+    aiPersona.classList.add('text-xl', 'font-italic', 'mb-2', 'text-primary');
+    aiPersona.textContent = "Persona: " + chat.AI_Persona;
+    aiPersona.style.fontFamily = 'monospace'; // Distinctive font for AI Persona
+
 
     const createDate = document.createElement('p');
     createDate.classList.add('text-sm', 'text-text-muted');
@@ -156,8 +168,11 @@ function displayChats(filteredChats) {
     chatSummary.textContent = chat.Summary || "No summary available";
 
     chatInfo.appendChild(chatTitle);
+    chatInfo.appendChild(aiPersona);
+    chatInfo.appendChild(gameName);
     chatInfo.appendChild(createDate);
     chatInfo.appendChild(chatSummary);
+    
 
     chatCard.appendChild(chatInfo);
     chatContainer.appendChild(chatCard);
