@@ -97,58 +97,84 @@ gameList.forEach(game => {
   gameFilter.appendChild(option);
 });
 
-
 const chatList = JSON.parse(localStorage.getItem('chat_list')).chat_list;
-
 const chatContainer = document.querySelector('.flex.flex-wrap.-mx-4'); 
 
+// Clear chat container before applying filters
 chatContainer.innerHTML = ''; 
 
-chatList.forEach(chat => {
-  // Create a new chat element based on chat data
-  const chatCard = document.createElement('a');
-  chatCard.classList.add('bg-card', 'rounded-lg', 'p-6', 'chat-card');
-  chatCard.href = 'chat.html';
+function filterChats(chats, gameFilterValue, personaFilterValue) {
+  // Filter logic based on selected game and persona
+  return chats.filter(chat => {
+    let isGameMatch = true;
+    let isPersonaMatch = true;
+    
+    if (gameFilterValue !== "All Games") {
+      isGameMatch = chat.Game_Name === gameFilterValue;
+    }
+    
+    if (personaFilterValue !== "All Personas") {
+      isPersonaMatch = chat.AI_Persona === personaFilterValue;
+    }
+    
+    return isGameMatch && isPersonaMatch;
+  });
+}
+
+function displayChats(filteredChats) {
+  filteredChats.forEach(chat => {
+    // Create a new chat element based on chat data
+    const chatCard = document.createElement('a');
+    chatCard.classList.add('bg-card', 'rounded-lg', 'p-6', 'chat-card');
+    chatCard.href = 'chat.html';
   
-  const chatInfo = document.createElement('div');
-  chatInfo.classList.add('chat-info');
+    const chatInfo = document.createElement('div');
+    chatInfo.classList.add('chat-info');
 
-  const chatTitle = document.createElement('h3');
-  chatTitle.classList.add('text-xl', 'font-bold', 'mb-2', 'text-primary');
-  chatTitle.textContent = chat.Game_Name;
+    const chatTitle = document.createElement('h3');
+    chatTitle.classList.add('text-xl', 'font-bold', 'mb-2', 'text-primary');
+    chatTitle.textContent = chat.Game_Name;
 
-  const createDate = document.createElement('p');
-  createDate.classList.add('text-sm', 'text-text-muted');
-  createDate.textContent = `Create Date: Jan 23`; // Replace with actual create date logic
+    const createDate = document.createElement('p');
+    createDate.classList.add('text-sm', 'text-text-muted');
+    createDate.textContent = `Create Date: Jan 23`; // Replace with actual create date logic
 
-  const lastChat = document.createElement('p');
-  lastChat.classList.add('text-sm', 'text-text-muted');
-  lastChat.textContent = `Last Chat: Feb 06`; // Replace with actual last chat date logic
+    const lastChat = document.createElement('p');
+    lastChat.classList.add('text-sm', 'text-text-muted');
+    lastChat.textContent = `Last Chat: Feb 06`; // Replace with actual last chat date logic
 
-  chatInfo.appendChild(chatTitle);
-  chatInfo.appendChild(createDate);
-  chatInfo.appendChild(lastChat);
+    const chatSummary = document.createElement('p');
+    chatSummary.classList.add('text-base', 'text-text-muted');
+    chatSummary.textContent = chat.Summary || "No summary available";
 
-  const chatSummary = document.createElement('div');
-  chatSummary.classList.add('chat-summary', 'mt-4');
+    chatInfo.appendChild(chatTitle);
+    chatInfo.appendChild(createDate);
+    chatInfo.appendChild(lastChat);
+    chatInfo.appendChild(chatSummary);
 
-  const summaryText = document.createElement('p');
-  summaryText.classList.add('text-sm', 'text-text-muted');
-  summaryText.textContent = chat.Summary;
+    chatCard.appendChild(chatInfo);
+    chatContainer.appendChild(chatCard);
+  });
+}
 
-  chatSummary.appendChild(summaryText);
+// Initial display of all chats
+displayChats(chatList);
 
-  const convID = document.createElement('span');
-  convID.id = `convID_${chat.ID}`; // Set unique ID based on chat ID
-  convID.style.display = 'none';
-  convID.textContent = chat.ID; // Set the conversation ID
+// Event listeners for filter selections
+gameFilter.addEventListener('change', () => {
+  const selectedGame = gameFilter.value;
+  const selectedPersona = personaFilter.value;
+  const filteredChats = filterChats(chatList, selectedGame, selectedPersona);
+  chatContainer.innerHTML = ''; // Clear container before repopulating
+  displayChats(filteredChats);
+});
 
-  chatCard.appendChild(chatInfo);
-  chatCard.appendChild(chatSummary);
-  chatCard.appendChild(convID);
-  chatCard.setAttribute('onclick', `localStorage.setItem('currentConversationID', '${chat.ID}')`);
-
-  chatContainer.appendChild(chatCard);
+personaFilter.addEventListener('change', () => {
+  const selectedGame = gameFilter.value;
+  const selectedPersona = personaFilter.value;
+  const filteredChats = filterChats(chatList, selectedGame, selectedPersona);
+  chatContainer.innerHTML = ''; // Clear container before repopulating
+  displayChats(filteredChats);
 });
 
   
