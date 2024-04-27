@@ -161,24 +161,26 @@ function displayChats(filteredChats) {
     chatTitle.textContent = chat.Title|| "Untitled";
     chatTitle.style.fontFamily = 'Lora'; // Clear, easy-to-read font
 
-    const gameName = document.createElement('h6');
+    const gameName = document.createElement('h1');
     gameName.classList.add('text-xl', 'font-bold', 'mb-2', 'text-primary');
     gameName.textContent = chat.Game_Name;
     gameName.style.fontFamily = 'cursive'; // Playful font for game titles
 
-    const aiPersona = document.createElement('h7');
+    const aiPersona = document.createElement('h1');
     aiPersona.classList.add('text-xl', 'font-italic', 'mb-2', 'text-primary');
     aiPersona.textContent = "Persona: " + chat.AI_Persona;
     aiPersona.style.fontFamily = 'Lora'; // Distinctive font for AI Persona
 
 
     const createDate = document.createElement('p');
-    createDate.classList.add('text-sm', 'text-text-muted');
+    createDate.classList.add('text-sm', 'font-bold', 'text-text-muted');
     createDate.textContent = formatDate(chat.Summary_Date)
+    createDate.style.fontFamily = 'monospace';
 
     const chatSummary = document.createElement('p');
     chatSummary.classList.add('text-base', 'text-text-muted');
     chatSummary.textContent = chat.Summary || "No summary available";
+    chatSummary.style.fontFamily = 'georgia';
 
     chatInfo.appendChild(chatTitle);
     chatInfo.appendChild(gameName);
