@@ -1,6 +1,6 @@
 // define light and dark themes
 const lightTheme = 'cupcake';
-const darkTheme = 'synthwave';
+const darkTheme = 'forest';
 
 // Get the theme toggle checkbox
 const themeToggle = document.querySelector('.theme-controller');
