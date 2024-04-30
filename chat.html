@@ -192,6 +192,7 @@
 
 	/* grab conversation history from local storage */
 	const currentConversationID = localStorage.getItem("currentConversationID");
+	console.log("this is currentconvID: ", currentConversationID);
 	let convObj = JSON.parse(localStorage.getItem(currentConversationID));
 	console.log(convObj);
 	const companionPersona = convObj.AI_Persona;
