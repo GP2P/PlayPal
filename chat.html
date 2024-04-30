@@ -154,17 +154,23 @@
 		isCollapsed = !isCollapsed;
 	});
 
+	let companionResponseSend = null;
 	document.getElementById('send-button').addEventListener('click', () => {
 		const textInput = document.getElementById('text-input');
 		const message = textInput.value;
 		if (message.trim()) {
 			appendUserMessage(message);
 			updateChatHistory("user", message);
-			getCompanionResponse(message).then(handleCompanionResponse);
+			getCompanionResponse(message).then(response => {
+				companionResponseSend = response;  
+				handleCompanionResponse(response); 
+			});
+			updateChatHistory("companion", companionResponseSend);
 			textInput.value = '';
 		}
 	});
 
+	let companionResponseEnter = null;
 	document.getElementById('text-input').addEventListener('keypress', (event) => {
 		if (event.key === 'Enter') {  
 			event.preventDefault(); 
@@ -173,7 +179,11 @@
 			if (message.trim()) {  
 				appendUserMessage(message); 
 				updateChatHistory("user", message);  
-				getCompanionResponse(message).then(handleCompanionResponse); 
+				getCompanionResponse(message).then(response => {
+					companionResponseEnter = response;  
+					handleCompanionResponse(response); 
+				});
+				updateChatHistory("companion", companionResponseEnter);
 				textInput.value = '';  
 			}
 		}
