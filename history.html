@@ -187,6 +187,7 @@ function displayChats(filteredChats) {
     chatInfo.appendChild(createDate);
     chatInfo.appendChild(chatSummary);
     
+    chatCard.setAttribute('onclick', `localStorage.setItem('currentConversationID', '${chat.ID}')`);
 
     chatCard.appendChild(chatInfo);
     chatContainer.appendChild(chatCard);

@@ -262,6 +262,7 @@
 					convObject.Title = new_title;
 					convObject.Summary = new_summary;
 					localStorage.setItem(currentConversationID, JSON.stringify(convObject));
+					console.log("set current convoid: ", currentConversationID);
 				}
 				displayChatSummary();
 				break;
@@ -396,6 +397,8 @@
 
 		const updatedConvJson = JSON.stringify(convObj);
 		localStorage.setItem(currentConversationID, updatedConvJson);
+		console.log("set current convoid2: ", currentConversationID);
+		
 	}
 
 	// append a new user message to the page
