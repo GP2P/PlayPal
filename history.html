@@ -161,9 +161,11 @@ function displayChats(filteredChats) {
     chatTitle.style.fontFamily = 'Lora';
 
     const gameName = document.createElement('h1');
-    gameName.classList.add('text-xl', 'font-bold', 'mb-2', 'text-primary');
+    gameName.classList.add('text-xl', 'font-bold', 'mb-2', 'text-primary', 'text-secondary');
     gameName.textContent = chat.Game_Name;
     gameName.style.fontFamily = 'cursive';
+    // gameName.classList.add('gameName');
+
 
     const aiPersona = document.createElement('h1');
     aiPersona.classList.add('text-xl', 'font-italic', 'mb-2', 'text-primary');
