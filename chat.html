@@ -154,36 +154,30 @@
 	});
 
 	let companionResponseSend = null;
-	document.getElementById('send-button').addEventListener('click', () => {
+	document.getElementById('send-button').addEventListener('click', async () => {
 		const textInput = document.getElementById('text-input');
 		const message = textInput.value;
 		if (message.trim()) {
 			appendUserMessage(message);
 			updateChatHistory("user", message);
-			getCompanionResponse().then(response => {
-				companionResponseSend = response;  
-				handleCompanionResponse(response); 
-			});
-			updateChatHistory("companion", companionResponseSend);
+			const companionMessage = await getCompanionResponse();
+			handleCompanionResponse(companionMessage);
 			textInput.value = '';
 		}
 	});
 
 	let companionResponseEnter = null;
-	document.getElementById('text-input').addEventListener('keypress', (event) => {
-		if (event.key === 'Enter') {  
-			event.preventDefault(); 
+	document.getElementById('text-input').addEventListener('keypress', async (event) => {
+		if (event.key === 'Enter') {
+			event.preventDefault();
 			const textInput = document.getElementById('text-input');
 			const message = textInput.value;
-			if (message.trim()) {  
-				appendUserMessage(message); 
-				updateChatHistory("user", message);  
-				getCompanionResponse(message).then(response => {
-					companionResponseEnter = response;  
-					handleCompanionResponse(response); 
-				});
-				updateChatHistory("companion", companionResponseEnter);
-				textInput.value = '';  
+			if (message.trim()) {
+				appendUserMessage(message);
+				updateChatHistory("user", message);
+				const companionMessage = await getCompanionResponse();
+				handleCompanionResponse(companionMessage);
+				textInput.value = '';
 			}
 		}
 	});
@@ -470,9 +464,7 @@
 					Authorization: 'Bearer rg_v1_gbgypjwk1bk7lsel8il4zfjfr6a7718rlp8o_ngk',
 				},
 				body: JSON.stringify({
-					// fill variables here.
 					"userMsg": localStorage.getItem(currentConversationID),
-					//"userMsg": latestMessage,
 				}),
 			}
 		).then(response => response.text());
@@ -488,15 +480,15 @@
 		updateChatHistory("user", transcript);
 		const companionMessage = await getCompanionResponse();
 		handleCompanionResponse(companionMessage);
-		updateChatHistory("companion", companionMessage);
 	};
 
 	function handleCompanionResponse(companionMessage) {
-		if (!companionMessage.startsWith("Skip") && companionMessage !== "...") {
+		if (!companionMessage.startsWith("Skip") && !companionMessage.startsWith("skip") && companionMessage !== "..." && companionMessage !== "") {
 			appendCompanionMessage(companionMessage);
-			updateChatHistory("companion", companionMessage);
+			updateChatHistory(companionPersona, companionMessage);
 		} else {
 			appendCompanionMessage("...");
+			updateChatHistory(companionPersona, "...");
 		}
 	}
 
