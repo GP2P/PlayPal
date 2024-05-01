@@ -486,7 +486,7 @@
 		
 		appendUserMessage(transcript);
 		updateChatHistory("user", transcript);
-		const companionMessage = await getCompanionResponse(transcript);
+		const companionMessage = await getCompanionResponse();
 		handleCompanionResponse(companionMessage);
 		updateChatHistory("companion", companionMessage);
 	};
