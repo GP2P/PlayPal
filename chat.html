@@ -24,6 +24,9 @@
 		#summary-content {
         color: white; 
 	    }
+		.toggle-spacing {
+        margin-top: 10px;
+    }
 
 	</style>
 	<script src="https://cdn.tailwindcss.com"></script>
@@ -111,6 +114,14 @@
 				<div class="flex gap-2">
 					<input type="text" id="text-input" class="input input-bordered" placeholder="Type your message...">
 					<button type="button" class="btn" id="send-button">Send</button>
+				</div>
+				<!-- <div class="flex gap-2">
+					<input class="toggle toggle-spacing" id ="toggle-speech" type="checkbox"/>
+					<span id="toggle-status toggle-spacing" class="ml-2">Voice Command Disabled</span>
+				</div> -->
+				<div class="flex toggle-spacing items-center">
+					<input class="toggle" id="toggle-speech" type="checkbox"/>
+					<span id="toggle-status" class="ml-2">Voice Command Disabled</span>
 				</div>
 			</div>
 
@@ -321,6 +332,8 @@
 	// speech recognition logic
 	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 	const voiceCommand = document.getElementById("voice-command");
+	const toggleSpeech = document.getElementById("toggle-speech");
+	const toggleStatus = document.getElementById("toggle-status");
 	const recognition = new SpeechRecognition();
 	let isListening = false;
 
@@ -328,6 +341,28 @@
 	recognition.lang = "en-US";
 	recognition.interimResults = false;
 	recognition.maxAlternatives = 1;
+
+	toggleSpeech.addEventListener('change', function() {
+        if (toggleSpeech.checked) {
+            toggleStatus.textContent = "Click 'J' or Microphone to Start Chat";
+        } else {
+            toggleStatus.textContent = "Click Microphone to Start Chat";
+        }
+    });
+
+	document.addEventListener('keypress', function(event) {
+        if (event.key === 'j' && toggleSpeech.checked) {
+            if (!isListening) {
+                recognition.start();
+                voiceCommand.classList.add("listening");
+                isListening = true;
+            } else {
+                recognition.stop();
+                voiceCommand.classList.remove("listening");
+                isListening = false;
+            }
+        }
+    });
 
 	voiceCommand.onclick = () => {
 		if (isListening) {
@@ -504,6 +539,12 @@
 		voiceCommand.classList.remove("listening");
 		console.error('Speech recognition error:', event.error);
 	};
+
+	if (toggleSpeech.checked) {
+        toggleStatus.textContent = "Click 'J' or Microphone to Start Chat";
+    } else {
+        toggleStatus.textContent = "Click Microphone to Start Chat";
+    }
 
 	//Outputs the response as a speech
 	const speechSynth = window.speechSynthesis;
