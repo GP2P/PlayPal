@@ -160,7 +160,7 @@
 		if (message.trim()) {
 			appendUserMessage(message);
 			updateChatHistory("user", message);
-			getCompanionResponse(message).then(response => {
+			getCompanionResponse().then(response => {
 				companionResponseSend = response;  
 				handleCompanionResponse(response); 
 			});
@@ -458,7 +458,7 @@
 
 	// generate a response to the latest user message
 	// requires local storage to be updated with the latest user message first!
-	async function getCompanionResponse(latestMessage) {
+	async function getCompanionResponse() {
 		// send all historical messages to the API
 		// const historicalMessages = JSON.parse(localStorage.getItem(currentConversationID)).Chat_History;
 		const response = await fetch(
@@ -471,8 +471,8 @@
 				},
 				body: JSON.stringify({
 					// fill variables here.
-					//"userMsg": localStorage.getItem(currentConversationID),
-					"userMsg": latestMessage,
+					"userMsg": localStorage.getItem(currentConversationID),
+					//"userMsg": latestMessage,
 				}),
 			}
 		).then(response => response.text());
