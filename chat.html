@@ -76,7 +76,12 @@
 						<ul class="p-2 bg-base-200">
 							<!--todo: implement-->
 							<li><a class="text-error" href="history.html"
-							       onclick="localStorage.removeItem(currentConversationID)">Delete Chat</a></li>
+									onclick="
+								    let chatList = JSON.parse(localStorage.getItem('chat_list')).chat_list;
+	                                let newChatList = chatList.filter(chat => chat.ID !== currentConversationID);
+	                                localStorage.setItem('chat_list', JSON.stringify({chat_list: newChatList}));
+									localStorage.removeItem(currentConversationID);
+									">Delete Chat</a></li>
 						</ul>
 					</details>
 					<!--Chat Name end-->
@@ -184,7 +189,6 @@
 		isCollapsed = !isCollapsed;
 	});
 
-	let companionResponseSend = null;
 	document.getElementById('send-button').addEventListener('click', async () => {
 		const textInput = document.getElementById('text-input');
 		const message = textInput.value;
@@ -197,7 +201,6 @@
 		}
 	});
 
-	let companionResponseEnter = null;
 	document.getElementById('text-input').addEventListener('keypress', async (event) => {
 		if (event.key === 'Enter') {
 			event.preventDefault();
