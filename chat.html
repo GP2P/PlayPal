@@ -119,7 +119,9 @@
 					<input class="toggle toggle-spacing" id ="toggle-speech" type="checkbox"/>
 					<span id="toggle-status toggle-spacing" class="ml-2">Voice Command Disabled</span>
 				</div> -->
+				
 				<div class="flex toggle-spacing items-center">
+					<button type="button" class="btn" id="stop-speech-button">Stop Speech</button>
 					<input class="toggle" id="toggle-speech" type="checkbox"/>
 					<span id="toggle-status" class="ml-2">Voice Command Disabled</span>
 				</div>
@@ -570,6 +572,12 @@
 		});
 
 		observer.observe(targetNode, config);
+    });
+
+	const stopSpeechButton = document.getElementById("stop-speech-button");
+	stopSpeechButton.addEventListener('click', function() {
+        // Cancel any ongoing speech synthesis
+        speechSynth.cancel();
     });
 
 </script>
