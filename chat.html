@@ -193,10 +193,7 @@
 		const textInput = document.getElementById('text-input');
 		const message = textInput.value;
 		if (message.trim()) {
-			appendUserMessage(message);
-			updateChatHistory("user", message);
-			const companionMessage = await getCompanionResponse();
-			handleCompanionResponse(companionMessage);
+			await handleNewUserMessage(message);
 			textInput.value = '';
 		}
 	});
@@ -207,10 +204,7 @@
 			const textInput = document.getElementById('text-input');
 			const message = textInput.value;
 			if (message.trim()) {
-				appendUserMessage(message);
-				updateChatHistory("user", message);
-				const companionMessage = await getCompanionResponse();
-				handleCompanionResponse(companionMessage);
+				await handleNewUserMessage(message);
 				textInput.value = '';
 			}
 		}
@@ -529,15 +523,19 @@
 		return response;
 	}
 
+	async function handleNewUserMessage(message) {
+		appendUserMessage(message);
+		updateChatHistory("user", message);
+		const companionMessage = await getCompanionResponse();
+		handleCompanionResponse(companionMessage);
+	}
+
 	recognition.onresult = async (event) => {
 		// Handling the latest result
 		const lastResultIndex = event.results.length - 1;
 		const transcript = event.results[lastResultIndex][0].transcript;
-		
-		appendUserMessage(transcript);
-		updateChatHistory("user", transcript);
-		const companionMessage = await getCompanionResponse();
-		handleCompanionResponse(companionMessage);
+
+		await handleNewUserMessage(transcript);
 	};
 
 	function handleCompanionResponse(companionMessage) {
