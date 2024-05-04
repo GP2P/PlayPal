@@ -15,14 +15,14 @@
 			z-index: 9999;
 		}
 		#text-input {
-			width: 400px; 
+            width: 400px;
 		}
 
 		#send-button {
 			min-width: 60px;
 		}
 		#summary-content {
-        color: white; 
+            color: white;
 	    }
 		.toggle-spacing {
         margin-top: 10px;
@@ -102,6 +102,7 @@
 				<h2></h2>
 				<p style="color: white;"></p>
 			</div>
+			<video autoplay muted></video>
 		</div>
 		<!-- Summary panel end -->
 
@@ -116,7 +117,7 @@
 
 		<!-- Chat panel start -->
 		<div id="chat-panel" class="w-2/3 transition-all duration-300 ease-in-out flex flex-col relative justify-start">
-			
+
 
 			<!-- Chat Content start -->
 			<div id="chat-content" class="flex-1 p-4 overflow-auto"></div>
@@ -139,21 +140,24 @@
 				</div>
 				<!-- <div class="flex gap-2">
 					<input class="toggle toggle-spacing" id ="toggle-speech" type="checkbox"/>
-					<span id="toggle-status toggle-spacing" class="ml-2">Voice Command Disabled</span>
+					<span id="toggle-speech-status toggle-spacing" class="ml-2">Voice Command Disabled</span>
 				</div> -->
-				
+
 				<div class="flex toggle-spacing items-center">
 					<div class="flex px-4"><button type="button" class="btn px-4" id="stop-speech-button">Stop Speech</button></div>
-					
-					<input class="toggle" id="toggle-speech" type="checkbox"/>
-					<span id="toggle-status" class="ml-2">Voice Command Disabled</span>
+
+					<div class="flex px-4"><input class="toggle" id="toggle-speech" type="checkbox"/>
+						<span class="ml-2" id="toggle-speech-status">Voice Command Disabled</span></div>
+
+					<div class="flex px-4"><input class="toggle" id="toggle-screen" type="checkbox"/>
+						<span class="ml-2" id="toggle-screen-status">Screen Capture Disabled</span></div>
 				</div>
 			</div>
 
 		</div>
 		<!-- Chat panel end -->
 
-		
+
 	</div>
 	<!-- Main container end -->
 </body>
@@ -164,7 +168,7 @@
 	const summaryPanel = document.getElementById('summary-panel');
 	const summaryContent = document.getElementById('summary-content');
 	const chatPanel = document.getElementById('chat-panel');
-	
+
 
 	let isCollapsed = false;
 
@@ -176,7 +180,7 @@
 			summaryContent.classList.remove('hidden');
 			chatPanel.classList.remove('w-full');
 			chatPanel.classList.add('w-2/3');
-			collapseButton.textContent = '<'; 
+			collapseButton.textContent = '<';
 		} else {
 			// Collapse the summary panel
 			summaryPanel.classList.remove('w-1/3');
@@ -232,7 +236,7 @@
 		let convJson = localStorage.getItem(currentConversationID);
 		let convObject = JSON.parse(convJson);
 		console.log(convObject); // test
-		
+
 		convObject.Chat_History.forEach((message) => {
 			if (message.role === "user") {
 				appendUserMessage(message.content);
@@ -242,7 +246,7 @@
 			}
 		});
 	}
-	
+
 	loadChatHistory();
 
 	// load summary
@@ -307,7 +311,7 @@
 	// updateChatSummary().then(() => displayChatSummary());
 	updateChatSummary();
 	displayChatSummary();
-	
+
 	function updateSummaryHeader(game, goal, persona, lastDate) {
 		// TODO
 		const summaryContentDiv = document.getElementById("summary-content");
@@ -350,7 +354,7 @@
 	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 	const voiceCommand = document.getElementById("voice-command");
 	const toggleSpeech = document.getElementById("toggle-speech");
-	const toggleStatus = document.getElementById("toggle-status");
+	const toggleSpeechStatus = document.getElementById("toggle-speech-status");
 	const recognition = new SpeechRecognition();
 	let isListening = false;
 
@@ -391,6 +395,51 @@
         }
         isListening = !isListening;
 	};
+
+	// Screen Capture logic
+	let screenStream = null;
+	let screenshotDataUrl = null;
+	const toggleScreen = document.getElementById("toggle-screen");
+	const toggleScreenStatus = document.getElementById("toggle-screen-status");
+
+	// Request the user's permission to capture their screen
+	async function captureScreen() {
+		try {
+			const displayMediaOptions = {
+				video: {
+					cursor: "never"
+				},
+				audio: false
+			};
+			return await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+		} catch (err) {
+			console.error("Error in captureScreen: " + err);
+		}
+	}
+
+	// Convert the stream into an image
+	function takeScreenshot(videoElem) {
+		let canvas = document.createElement('canvas');
+		canvas.width = videoElem.videoWidth;
+		canvas.height = videoElem.videoHeight;
+		let ctx = canvas.getContext('2d');
+		ctx.drawImage(videoElem, 0, 0, canvas.width, canvas.height);
+		return canvas.toDataURL('image/jpeg');
+	}
+
+	toggleScreen.addEventListener('change', async function () {
+		if (toggleScreen.checked) {
+			const videoElem = document.querySelector("video");
+			if (!screenStream) {
+				screenStream = await captureScreen();
+				videoElem.srcObject = screenStream;
+			}
+			toggleScreenStatus.textContent = "Screen Capture Enabled";
+		} else {
+			screenshotDataUrl = null;
+			toggleScreenStatus.textContent = "Screen Capture Disabled";
+		}
+	});
 
 	function updateGameLast_Played() {
 		const gameList = JSON.parse(localStorage.getItem("game_list")).game_list;
@@ -444,7 +493,7 @@
 		const updatedConvJson = JSON.stringify(convObj);
 		localStorage.setItem(currentConversationID, updatedConvJson);
 		console.log("set current convoid2: ", currentConversationID);
-		
+
 	}
 
 	// append a new user message to the page
@@ -480,7 +529,7 @@
 		const chatContent = document.getElementById("chat-content");
 
 		const companionMessage = document.createElement("div");
-		companionMessage.className = "chat chat-start"; 
+		companionMessage.className = "chat chat-start";
 
 		const avatar = document.createElement("div");
 		avatar.className = "chat-image avatar";
@@ -507,20 +556,40 @@
 	async function getCompanionResponse() {
 		// send all historical messages to the API
 		// const historicalMessages = JSON.parse(localStorage.getItem(currentConversationID)).Chat_History;
-		const response = await fetch(
-			'https://noggin.rea.gent/entire-ermine-9121',
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: 'Bearer rg_v1_gbgypjwk1bk7lsel8il4zfjfr6a7718rlp8o_ngk',
-				},
-				body: JSON.stringify({
-					"userMsg": localStorage.getItem(currentConversationID),
-				}),
-			}
-		).then(response => response.text());
+
+		if (toggleScreen.checked) {
+			screenshotDataUrl = takeScreenshot(document.querySelector("video"));
+			const response = await fetch(
+				'https://noggin.rea.gent/crazy-albatross-3984',
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: 'Bearer rg_v1_78yvnlk82uojdjhayl7eg2q5jcuxry0jd9e7_ngk',
+					},
+					body: JSON.stringify({
+						"history": localStorage.getItem(currentConversationID),
+						"image": screenshotDataUrl,
+					}),
+				}
+			).then(response => response.text());
+			return response;
+		} else {
+			const response = await fetch(
+				'https://noggin.rea.gent/entire-ermine-9121',
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: 'Bearer rg_v1_gbgypjwk1bk7lsel8il4zfjfr6a7718rlp8o_ngk',
+					},
+					body: JSON.stringify({
+						"userMsg": localStorage.getItem(currentConversationID),
+					}),
+				}
+			).then(response => response.text());
 		return response;
+		}
 	}
 
 	async function handleNewUserMessage(message) {
@@ -562,10 +631,16 @@
 	};
 
 	if (toggleSpeech.checked) {
-        toggleStatus.textContent = "Click 'J' or Microphone to Start Chat";
+		toggleSpeechStatus.textContent = "Click 'J' or Microphone to Start Chat";
     } else {
-        toggleStatus.textContent = "Click Microphone to Start Chat";
+		toggleSpeechStatus.textContent = "Click Microphone to Start Chat";
     }
+
+	if (toggleScreen.checked) {
+		toggleScreenStatus.textContent = "Screen Capture Enabled";
+	} else {
+		toggleScreenStatus.textContent = "Screen Capture Disabled";
+	}
 
 	//Outputs the response as a speech
 	const speechSynth = window.speechSynthesis;
@@ -578,7 +653,7 @@
 		const observer = new MutationObserver(function(mutations) {
 			mutations.forEach(function(mutation) {
 				mutation.addedNodes.forEach(function(node) {
-					if (node.nodeType === 1 && node.querySelector('.response')) { 
+					if (node.nodeType === 1 && node.querySelector('.response')) {
 						const messages = node.querySelectorAll('.response');
 						messages.forEach(msg => {
 							const speech = new SpeechSynthesisUtterance(msg.textContent);
