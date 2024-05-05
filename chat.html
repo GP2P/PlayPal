@@ -576,15 +576,15 @@
 			return response;
 		} else {
 			const response = await fetch(
-				'https://noggin.rea.gent/entire-ermine-9121',
+				'https://noggin.rea.gent/unique-roadrunner-4550',
 				{
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: 'Bearer rg_v1_gbgypjwk1bk7lsel8il4zfjfr6a7718rlp8o_ngk',
+						Authorization: 'Bearer rg_v1_1arbvwcqw04rv34p7lr4p46ui4ic12n9xiad_ngk',
 					},
 					body: JSON.stringify({
-						"userMsg": JSON.stringify(historicalMessages),
+						"history": JSON.stringify(historicalMessages),
 					}),
 				}
 			).then(response => response.text());
