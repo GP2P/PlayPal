@@ -150,7 +150,7 @@
 						<span class="ml-2" id="toggle-speech-status">Voice Command Disabled</span></div>
 
 					<div class="flex px-4"><input class="toggle" id="toggle-screen" type="checkbox"/>
-						<span class="ml-2" id="toggle-screen-status">Screen Capture Disabled</span></div>
+						<span class="ml-2" id="toggle-screen-status">Screen Share Disabled</span></div>
 				</div>
 			</div>
 
@@ -396,7 +396,7 @@
         isListening = !isListening;
 	};
 
-	// Screen Capture logic
+	// Screen Share logic
 	let screenStream = null;
 	let screenshotDataUrl = null;
 	const toggleScreen = document.getElementById("toggle-screen");
@@ -434,10 +434,10 @@
 				screenStream = await captureScreen();
 				videoElem.srcObject = screenStream;
 			}
-			toggleScreenStatus.textContent = "Screen Capture Enabled";
+			toggleScreenStatus.textContent = "Screen Share Enabled";
 		} else {
 			screenshotDataUrl = null;
-			toggleScreenStatus.textContent = "Screen Capture Disabled";
+			toggleScreenStatus.textContent = "Screen Share Disabled";
 		}
 	});
 
@@ -637,9 +637,9 @@
     }
 
 	if (toggleScreen.checked) {
-		toggleScreenStatus.textContent = "Screen Capture Enabled";
+		toggleScreenStatus.textContent = "Screen Share Enabled";
 	} else {
-		toggleScreenStatus.textContent = "Screen Capture Disabled";
+		toggleScreenStatus.textContent = "Screen Share Disabled";
 	}
 
 	//Outputs the response as a speech
