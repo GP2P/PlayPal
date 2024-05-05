@@ -568,7 +568,7 @@
 						Authorization: 'Bearer rg_v1_7qom0sqgt9e0xfh734j492ytvd7lucp62j6f_ngk',
 					},
 					body: JSON.stringify({
-						"history": historicalMessages,
+						"history": JSON.stringify(historicalMessages),
 						"image": screenshotDataUrl,
 					}),
 				}
@@ -584,7 +584,7 @@
 						Authorization: 'Bearer rg_v1_gbgypjwk1bk7lsel8il4zfjfr6a7718rlp8o_ngk',
 					},
 					body: JSON.stringify({
-						"userMsg": historicalMessages,
+						"userMsg": JSON.stringify(historicalMessages),
 					}),
 				}
 			).then(response => response.text());
