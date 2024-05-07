@@ -1,13 +1,17 @@
 // if empty, populate local storage with data
 
+let anythingAdded = false;
+
 // add currentConversationID
 if (!localStorage.getItem('currentConversationID')) {
 	localStorage.setItem('currentConversationID', 'conv_1');
+	anythingAdded = true;
 }
 
 // add latestConversationID
 if (!localStorage.getItem('latestConversationID')) {
 	localStorage.setItem('latestConversationID', '6');
+	anythingAdded = true;
 }
 
 if (!localStorage.getItem('game_list')) {
@@ -24,6 +28,7 @@ if (!localStorage.getItem('game_list')) {
 			"Game_Name": "Cyberpunk 2077", "Last_Played": "2024-03-23T12:13:39.231Z", "Icon_Url": ""
 		}]
 	}));
+	anythingAdded = true;
 }
 
 if (!localStorage.getItem('persona_list')) {
@@ -40,6 +45,7 @@ if (!localStorage.getItem('persona_list')) {
 			"Persona_Name": "AI Girlfriend", "Last_Chat": "2023-01-23T12:13:39.231Z", "Icon_Url": ""
 		}]
 	}));
+	anythingAdded = true;
 }
 
 if (!localStorage.getItem('chat_list')) {
@@ -100,6 +106,7 @@ if (!localStorage.getItem('chat_list')) {
 			"Summary_Date": "2024-04-04T12:13:29.231Z"
 		}]
 	}));
+	anythingAdded = true;
 }
 
 
@@ -124,6 +131,7 @@ if (!localStorage.getItem('conv_1')) {
 			"role": "Best Friend", "content": "I know that level. Let me guide you through it."
 		}]
 	}));
+	anythingAdded = true;
 }
 
 if (!localStorage.getItem('conv_2')) {
@@ -148,6 +156,7 @@ if (!localStorage.getItem('conv_2')) {
 			"role": "Girlfriend", "content": "That's an interesting route. Let's plan it out."
 		}]
 	}));
+	anythingAdded = true;
 }
 
 if (!localStorage.getItem('conv_3')) {
@@ -182,6 +191,7 @@ if (!localStorage.getItem('conv_3')) {
 		]
 	}
 	));
+	anythingAdded = true;
 }
 
 if (!localStorage.getItem('conv_4')) {
@@ -218,6 +228,7 @@ if (!localStorage.getItem('conv_4')) {
 		}
 		
 	));
+	addedAnything = true;
 }
 
 if (!localStorage.getItem('conv_5')) {
@@ -254,6 +265,7 @@ if (!localStorage.getItem('conv_5')) {
 		}
 		
 	));
+	addedAnything = true;
 }
 
 if (!localStorage.getItem('conv_6')) {
@@ -290,4 +302,9 @@ if (!localStorage.getItem('conv_6')) {
 		}
 		
 	));
+	addedAnything = true;
+}
+
+if (anythingAdded) {
+	location.reload();
 }
