@@ -3,13 +3,15 @@
 ## Description
 
 Hi there, welcome to PlayPal.
-PlayPal is a Voice-based AI companion to help solo PC gamers.
+PlayPal is a voice-based & vision-capable AI companion to help solo PC gamers.
 
 ## No installation required!
 
 [Try now here!](new)
 
 or, if you have the project downloaded, just open any of the .html files!
+
+> The website is fully static and does not require server / setup!
 
 ## Instructions
 
